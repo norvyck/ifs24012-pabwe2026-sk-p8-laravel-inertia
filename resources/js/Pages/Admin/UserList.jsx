@@ -112,6 +112,7 @@ export default function UserList({ users, filters }) {
                                             <td className="px-6 py-4 whitespace-nowrap text-right">
                                                 <Link
                                                     href={`/admin/users/${u.id}/posts`}
+                                                    aria-label={`View articles by ${u.name}`}
                                                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 hover:text-amber-400 hover:border-amber-600 transition shadow-xs"
                                                 >
                                                     <FileText className="w-3.5 h-3.5" />
@@ -141,18 +142,25 @@ export default function UserList({ users, filters }) {
                             </span>
                             <div className="flex items-center gap-1">
                                 {users.links.map((link, idx) => (
-                                    <Link
-                                        key={idx}
-                                        href={link.url || '#'}
-                                        dangerouslySetInnerHTML={{ __html: link.label }}
-                                        className={`px-3 py-1 rounded-lg text-xs transition ${
-                                            link.active
-                                                ? 'bg-amber-600 text-white font-bold'
-                                                : link.url
-                                                ? 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                                                : 'opacity-40 pointer-events-none'
-                                        }`}
-                                    />
+                                    link.url ? (
+                                        <Link
+                                            key={idx}
+                                            href={link.url}
+                                            dangerouslySetInnerHTML={{ __html: link.label }}
+                                            className={`px-3 py-1 rounded-lg text-xs transition ${
+                                                link.active
+                                                    ? 'bg-amber-600 text-white font-bold'
+                                                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                                            }`}
+                                        />
+                                    ) : (
+                                        <span
+                                            key={idx}
+                                            dangerouslySetInnerHTML={{ __html: link.label }}
+                                            aria-disabled="true"
+                                            className="px-3 py-1 rounded-lg text-xs text-slate-400 opacity-60 cursor-not-allowed select-none"
+                                        />
+                                    )
                                 ))}
                             </div>
                         </div>

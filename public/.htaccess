@@ -23,3 +23,10 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+<IfModule mod_headers.c>
+    # 1 Year Cache for Static Hashed Assets (Lighthouse static asset cache policy)
+    <FilesMatch "\.(css|js|map|woff2?|ttf|eot|svg|png|jpe?g|gif|webp|ico)$">
+        Header set Cache-Control "max-age=31536000, public, immutable"
+    </FilesMatch>
+</IfModule>

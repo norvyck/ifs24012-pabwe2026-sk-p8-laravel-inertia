@@ -378,8 +378,8 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                                 <button
                                                     onClick={() => setOpenKebabId(openKebabId === post.id ? null : post.id)}
                                                     className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition"
-                                                    title="Actions Menu"
-                                                    aria-label="Actions Menu"
+                                                    title={`Actions for ${post.title}`}
+                                                    aria-label={`Actions for ${post.title}`}
                                                 >
                                                     <MoreVertical className="w-5 h-5" />
                                                 </button>
@@ -442,18 +442,25 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                             </span>
                             <div className="flex items-center gap-1">
                                 {posts.links.map((link, idx) => (
-                                    <Link
-                                        key={idx}
-                                        href={link.url || '#'}
-                                        dangerouslySetInnerHTML={{ __html: link.label }}
-                                        className={`px-3 py-1 rounded-lg text-xs transition ${
-                                            link.active
-                                                ? 'bg-indigo-600 text-white font-bold'
-                                                : link.url
-                                                ? 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                                                : 'opacity-40 pointer-events-none'
-                                        }`}
-                                    />
+                                    link.url ? (
+                                        <Link
+                                            key={idx}
+                                            href={link.url}
+                                            dangerouslySetInnerHTML={{ __html: link.label }}
+                                            className={`px-3 py-1 rounded-lg text-xs transition ${
+                                                link.active
+                                                    ? 'bg-indigo-600 text-white font-bold'
+                                                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                                            }`}
+                                        />
+                                    ) : (
+                                        <span
+                                            key={idx}
+                                            dangerouslySetInnerHTML={{ __html: link.label }}
+                                            aria-disabled="true"
+                                            className="px-3 py-1 rounded-lg text-xs text-slate-400 opacity-60 cursor-not-allowed select-none"
+                                        />
+                                    )
                                 ))}
                             </div>
                         </div>

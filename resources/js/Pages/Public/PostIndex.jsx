@@ -169,6 +169,7 @@ export default function PostIndex({ posts, filters, categories }) {
                                         </div>
                                         <Link 
                                             href={`/articles/${post.slug}`}
+                                            aria-label={`Read article: ${post.title}`}
                                             className="inline-flex items-center gap-1 font-semibold text-indigo-400 hover:text-indigo-300 group-hover:translate-x-1 transition"
                                         >
                                             <span>Read</span>
@@ -191,18 +192,25 @@ export default function PostIndex({ posts, filters, categories }) {
                 {posts?.links?.length > 3 && (
                     <div className="mt-12 flex items-center justify-center gap-1">
                         {posts.links.map((link, idx) => (
-                            <Link
-                                key={idx}
-                                href={link.url || '#'}
-                                dangerouslySetInnerHTML={{ __html: link.label }}
-                                className={`px-3 py-1.5 rounded-lg text-sm transition ${
-                                    link.active
-                                        ? 'bg-indigo-600 text-white font-bold'
-                                        : link.url
-                                        ? 'bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800'
-                                        : 'opacity-40 pointer-events-none'
-                                }`}
-                            />
+                            link.url ? (
+                                <Link
+                                    key={idx}
+                                    href={link.url}
+                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                    className={`px-3 py-1.5 rounded-lg text-sm transition ${
+                                        link.active
+                                            ? 'bg-indigo-600 text-white font-bold'
+                                            : 'bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800'
+                                    }`}
+                                />
+                            ) : (
+                                <span
+                                    key={idx}
+                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                    aria-disabled="true"
+                                    className="px-3 py-1.5 rounded-lg text-sm text-slate-400 opacity-60 cursor-not-allowed select-none"
+                                />
+                            )
                         ))}
                     </div>
                 )}

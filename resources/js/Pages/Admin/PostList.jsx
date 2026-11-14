@@ -119,6 +119,7 @@ export default function PostList({ posts, filters }) {
                                                 {post.is_published ? (
                                                     <Link
                                                         href={`/articles/${post.slug}`}
+                                                        aria-label={`View article: ${post.title}`}
                                                         className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-400 hover:text-indigo-300"
                                                     >
                                                         <Eye className="w-3.5 h-3.5" />
@@ -150,18 +151,25 @@ export default function PostList({ posts, filters }) {
                             </span>
                             <div className="flex items-center gap-1">
                                 {posts.links.map((link, idx) => (
-                                    <Link
-                                        key={idx}
-                                        href={link.url || '#'}
-                                        dangerouslySetInnerHTML={{ __html: link.label }}
-                                        className={`px-3 py-1 rounded-lg text-xs transition ${
-                                            link.active
-                                                ? 'bg-amber-600 text-white font-bold'
-                                                : link.url
-                                                ? 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                                                : 'opacity-40 pointer-events-none'
-                                        }`}
-                                    />
+                                    link.url ? (
+                                        <Link
+                                            key={idx}
+                                            href={link.url}
+                                            dangerouslySetInnerHTML={{ __html: link.label }}
+                                            className={`px-3 py-1 rounded-lg text-xs transition ${
+                                                link.active
+                                                    ? 'bg-amber-600 text-white font-bold'
+                                                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                                            }`}
+                                        />
+                                    ) : (
+                                        <span
+                                            key={idx}
+                                            dangerouslySetInnerHTML={{ __html: link.label }}
+                                            aria-disabled="true"
+                                            className="px-3 py-1 rounded-lg text-xs text-slate-400 opacity-60 cursor-not-allowed select-none"
+                                        />
+                                    )
                                 ))}
                             </div>
                         </div>

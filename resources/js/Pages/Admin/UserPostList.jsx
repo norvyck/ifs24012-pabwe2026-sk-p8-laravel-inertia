@@ -145,6 +145,7 @@ export default function UserPostList({ targetUser, posts, stats, filters }) {
                                                 {post.is_published ? (
                                                     <Link
                                                         href={`/articles/${post.slug}`}
+                                                        aria-label={`View article: ${post.title}`}
                                                         className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-400 hover:text-indigo-300"
                                                     >
                                                         <Eye className="w-3.5 h-3.5" />
