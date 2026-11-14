@@ -1,0 +1,176 @@
+import React, { useState } from 'react';
+import { Head, Link, router } from '@inertiajs/react';
+import AppLayout from '../../Layouts/AppLayout';
+import MarkdownViewer from '../../Components/MarkdownViewer';
+import { 
+    ArrowLeft, 
+    Calendar, 
+    ToggleLeft, 
+    ToggleRight, 
+    Trash2, 
+    Upload, 
+    Image, 
+    Pencil, 
+    Clock, 
+    CheckCircle2 
+} from 'lucide-react';
+
+export default function PostShow({ post }) {
+    const [isUploadingCover, setIsUploadingCover] = useState(false);
+
+    const handleTogglePublish = () => {
+        router.patch(`/dashboard/posts/${post.id}/publish`);
+    };
+
+    const handleDelete = () => {
+        if (confirm('Yakin ingin menghapus artikel ini?')) {
+            router.delete(`/dashboard/posts/${post.id}`);
+        }
+    };
+
+    const handleCoverUpload = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        setIsUploadingCover(true);
+        const formData = new FormData();
+        formData.append('cover_image', file);
+
+        router.post(`/dashboard/posts/${post.id}/cover`, formData, {
+            onFinish: () => setIsUploadingCover(false),
+        });
+    };
+
+    const handleDeleteCover = () => {
+        if (confirm('Hapus foto sampul artikel ini?')) {
+            router.delete(`/dashboard/posts/${post.id}/cover`);
+        }
+    };
+
+    return (
+        <AppLayout title={post.title}>
+            <Head title={`Detail: ${post.title} - BlogVerse Pro`} />
+
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                {/* Back and Action Buttons */}
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+                    <Link
+                        href="/dashboard/posts"
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-indigo-600 transition"
+                    >
+                        <ArrowLeft className="w-4 h-4" />
+                        <span>Kembali ke Dashboard Penulis</span>
+                    </Link>
+
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={handleTogglePublish}
+                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
+                                post.is_published
+                                    ? 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200'
+                                    : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200'
+                            }`}
+                        >
+                            {post.is_published ? (
+                                <>
+                                    <Clock className="w-3.5 h-3.5" />
+                                    <span>Jadikan Draf</span>
+                                </>
+                            ) : (
+                                <>
+                                    <CheckCircle2 className="w-3.5 h-3.5" />
+                                    <span>Publikasikan</span>
+                                </>
+                            )}
+                        </button>
+
+                        <button
+                            onClick={handleDelete}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 transition"
+                        >
+                            <Trash2 className="w-3.5 h-3.5" />
+                            <span>Hapus</span>
+                        </button>
+                    </div>
+                </div>
+
+                {/* Article Card */}
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 sm:p-12 mb-8">
+                    {/* Status & Category */}
+                    <div className="flex flex-wrap items-center gap-2 mb-4">
+                        <span className="px-3 py-1 rounded-full text-xs font-bold uppercase bg-indigo-50 text-indigo-700 border border-indigo-100">
+                            {post.category}
+                        </span>
+                        <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+                            post.is_published 
+                                ? 'bg-emerald-100 text-emerald-800' 
+                                : 'bg-slate-100 text-slate-600'
+                        }`}>
+                            {post.is_published ? 'Terpublikasi' : 'Draf Pribadi'}
+                        </span>
+                    </div>
+
+                    <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                        {post.title}
+                    </h1>
+
+                    {post.excerpt && (
+                        <p className="mt-3 text-base text-slate-600 italic">
+                            "{post.excerpt}"
+                        </p>
+                    )}
+
+                    <div className="mt-4 pt-4 border-t border-slate-100 flex items-center gap-4 text-xs text-slate-400">
+                        <span>Dibuat: {new Date(post.created_at).toLocaleDateString('id-ID')}</span>
+                        {post.published_at && (
+                            <span>Dipublikasikan: {new Date(post.published_at).toLocaleDateString('id-ID')}</span>
+                        )}
+                        <span>Slug: /{post.slug}</span>
+                    </div>
+
+                    {/* Cover Section */}
+                    <div className="mt-6 mb-8 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        {post.cover_image_path ? (
+                            <div className="space-y-3">
+                                <div className="h-64 rounded-lg overflow-hidden border border-slate-200">
+                                    <img src={post.cover_image_path} alt={post.title} className="w-full h-full object-cover" />
+                                </div>
+                                <div className="flex items-center justify-between text-xs">
+                                    <span className="text-slate-500 font-medium">Foto sampul aktif</span>
+                                    <button 
+                                        onClick={handleDeleteCover} 
+                                        className="text-rose-600 hover:text-rose-800 font-semibold"
+                                    >
+                                        Hapus Foto Sampul
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+                                <div className="flex items-center gap-2">
+                                    <Image className="w-4 h-4 text-slate-400" />
+                                    <span>Artikel ini belum memiliki foto sampul.</span>
+                                </div>
+                                <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold cursor-pointer">
+                                    <Upload className="w-3.5 h-3.5 text-indigo-600" />
+                                    <span>Unggah Sampul</span>
+                                    <input 
+                                        type="file" 
+                                        accept="image/*" 
+                                        onChange={handleCoverUpload} 
+                                        className="hidden" 
+                                    />
+                                </label>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* TOAST UI Viewer rendered content */}
+                    <div className="pt-6 border-t border-slate-100">
+                        <MarkdownViewer content={post.content} />
+                    </div>
+                </div>
+            </div>
+        </AppLayout>
+    );
+}

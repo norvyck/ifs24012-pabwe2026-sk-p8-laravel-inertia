@@ -1,0 +1,17 @@
+@import 'tailwindcss';
+@import '@toast-ui/editor/dist/toastui-editor.css';
+
+@source '../views/**/*.blade.php';
+@source '../js/**/*.{jsx,js}';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* Cursor pointer hover rules requested by PDF Section 3.6 */
+button, a, select, [role="button"] {
+    cursor: pointer;
+}
