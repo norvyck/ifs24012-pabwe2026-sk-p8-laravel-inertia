@@ -451,4 +451,130 @@ class ComprehensiveCoverageTest extends TestCase
         $systemCsv = ob_get_clean();
         $this->assertNotEmpty($systemCsv);
     }
+
+    public function test_post_controller_store_and_update_with_and_without_optional_fields(): void
+    {
+        Storage::fake('public');
+        $user = User::factory()->create();
+
+        // 1. Store without optional fields (cover_image null, excerpt null, is_published false)
+        $storeRes = $this->actingAs($user)->post('/dashboard/posts', [
+            'title' => 'Post Without Optional Fields',
+            'category' => PostCategory::PENDIDIKAN->value,
+            'content' => 'Content without excerpt or cover',
+        ]);
+        $storeRes->assertRedirect(route('dashboard.posts.index'));
+        $createdPost = Post::where('title', 'Post Without Optional Fields')->first();
+        $this->assertNotNull($createdPost);
+        $this->assertFalse($createdPost->is_published);
+        $this->assertNull($createdPost->cover_image_path);
+
+        // 2. Update post WITH a new cover image via HTTP controller
+        $updateRes = $this->actingAs($user)->put("/dashboard/posts/{$createdPost->id}", [
+            'title' => 'Post With Uploaded Cover Via Controller',
+            'category' => PostCategory::PENDIDIKAN->value,
+            'content' => 'Updated content with cover image',
+            'cover_image' => UploadedFile::fake()->image('updated_cover.jpg'),
+        ]);
+        $updateRes->assertRedirect();
+        $createdPost->refresh();
+        $this->assertNotNull($createdPost->cover_image_path);
+    }
+
+    public function test_profile_controller_update_without_optional_fields(): void
+    {
+        $user = User::factory()->create(['password' => bcrypt('existing_password')]);
+
+        // Update profile without password and without profile_photo via HTTP controller
+        $res = $this->actingAs($user)->put('/profile', [
+            'name' => 'Profile Updated Without Optional Fields',
+            'email' => 'no_opt@example.test',
+        ]);
+        $res->assertRedirect();
+        $user->refresh();
+        $this->assertEquals('Profile Updated Without Optional Fields', $user->name);
+    }
+
+    public function test_post_service_toggle_publish_with_existing_published_at_and_explicit_date(): void
+    {
+        $user = User::factory()->create();
+        $service = app(PostService::class);
+        $pastDate = now()->subDays(5);
+
+        // 1. Create post with explicit published_at
+        $post = $service->createPost($user, [
+            'title' => 'Explicit Date Post',
+            'category' => PostCategory::TEKNOLOGI->value,
+            'content' => 'Explicit date content',
+            'is_published' => true,
+            'published_at' => $pastDate,
+        ]);
+        $this->assertNotNull($post->published_at);
+
+        // 2. Draft post with preserved published_at date
+        $post->update(['is_published' => false, 'published_at' => $pastDate]);
+        $this->assertFalse($post->fresh()->is_published);
+
+        // 3. Toggle to published when published_at already exists
+        $service->togglePublish($post);
+        $post->refresh();
+        $this->assertTrue($post->is_published);
+        $this->assertEquals($pastDate->format('Y-m-d H:i'), $post->published_at->format('Y-m-d H:i'));
+    }
+
+    public function test_post_repository_direct_delete(): void
+    {
+        $user = User::factory()->create();
+        $post = Post::factory()->create(['user_id' => $user->id]);
+        $repo = app(PostRepositoryInterface::class);
+
+        $result = $repo->delete($post);
+        $this->assertTrue($result);
+        $this->assertDatabaseMissing('posts', ['id' => $post->id]);
+    }
+
+    public function test_openai_service_invalid_json_fallback(): void
+    {
+        // When API returns HTTP 200 but content is not a valid JSON array
+        Http::fake([
+            'https://api.openai.com/v1/*' => Http::response([
+                'choices' => [
+                    [
+                        'message' => [
+                            'content' => 'This is plain text and definitely not JSON format.',
+                        ],
+                    ],
+                ],
+            ], 200),
+        ]);
+
+        $service = new OpenAiPostGeneratorService('sk-mock-key');
+        $posts = $service->generatePosts('Plain Text Fallback Topic', 1, PostCategory::TEKNOLOGI->value);
+        $this->assertCount(1, $posts);
+        $this->assertStringContainsString('Plain Text Fallback Topic', $posts[0]->title);
+    }
+
+    public function test_post_excel_service_content_in_column_d(): void
+    {
+        $user = User::factory()->create();
+        $excelService = app(PostExcelService::class);
+
+        // Create spreadsheet where content is in Col D (when Col E is missing)
+        $spreadsheet = new Spreadsheet;
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray([
+            ['Header A', 'Header B', 'Header C', 'Header D'],
+            ['', 'Article In Col B', 'Teknologi', 'Content in Column D'],
+        ]);
+
+        $tempPath = storage_path('framework/testing/col_d_import.xlsx');
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($tempPath);
+
+        $file = new UploadedFile($tempPath, 'col_d_import.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', null, true);
+        $result = $excelService->importPosts($user, $file);
+
+        $this->assertEquals(1, $result['imported']);
+        @unlink($tempPath);
+    }
 }
