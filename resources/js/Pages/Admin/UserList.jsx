@@ -86,6 +86,9 @@ export default function UserList({ users, filters }) {
                                                             <img 
                                                                 src={u.profile_photo_path} 
                                                                 alt={u.name} 
+                                                                width="36"
+                                                                height="36"
+                                                                loading="lazy"
                                                                 className="absolute inset-0 w-full h-full rounded-full object-cover" 
                                                                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
                                                             />
