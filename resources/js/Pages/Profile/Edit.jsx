@@ -35,11 +35,15 @@ export default function Edit({ user }) {
 
                 <div className="bg-slate-900 rounded-2xl border border-slate-800 shadow-xl overflow-hidden">
                     <div className="p-8 bg-slate-950/60 border-b border-slate-800 flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-full bg-indigo-950 text-indigo-300 flex items-center justify-center font-bold text-xl overflow-hidden border-2 border-indigo-700 shadow-md">
-                            {user.profile_photo_path ? (
-                                <img src={user.profile_photo_path} alt={user.name} className="w-full h-full object-cover" />
-                            ) : (
-                                user.name.charAt(0).toUpperCase()
+                        <div className="w-16 h-16 rounded-full bg-indigo-950 text-indigo-300 flex items-center justify-center font-bold text-xl overflow-hidden border-2 border-indigo-700 shadow-md relative">
+                            <span>{user.name.charAt(0).toUpperCase()}</span>
+                            {user.profile_photo_path && (
+                                <img 
+                                    src={user.profile_photo_path} 
+                                    alt={user.name} 
+                                    className="absolute inset-0 w-full h-full object-cover" 
+                                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                                />
                             )}
                         </div>
                         <div>

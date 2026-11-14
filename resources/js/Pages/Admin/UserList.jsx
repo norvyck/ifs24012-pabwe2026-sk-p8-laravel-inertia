@@ -76,11 +76,15 @@ export default function UserList({ users, filters }) {
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-slate-200 text-xs">
-                                                        {u.profile_photo_path ? (
-                                                            <img src={u.profile_photo_path} alt={u.name} className="w-full h-full rounded-full object-cover" />
-                                                        ) : (
-                                                            u.name.charAt(0).toUpperCase()
+                                                    <div className="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-slate-200 text-xs overflow-hidden relative">
+                                                        <span>{u.name.charAt(0).toUpperCase()}</span>
+                                                        {u.profile_photo_path && (
+                                                            <img 
+                                                                src={u.profile_photo_path} 
+                                                                alt={u.name} 
+                                                                className="absolute inset-0 w-full h-full rounded-full object-cover" 
+                                                                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                                                            />
                                                         )}
                                                     </div>
                                                     <div>

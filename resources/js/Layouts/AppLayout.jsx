@@ -129,11 +129,15 @@ export default function AppLayout({ children, title }) {
                                         href="/profile" 
                                         className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-800 transition"
                                     >
-                                        <div className="w-8 h-8 rounded-full bg-indigo-950 border border-indigo-700 flex items-center justify-center text-indigo-300 font-semibold text-xs overflow-hidden">
-                                            {user.profile_photo_path ? (
-                                                <img src={user.profile_photo_path} alt={user.name} className="w-full h-full object-cover" />
-                                            ) : (
-                                                user.name.charAt(0).toUpperCase()
+                                        <div className="w-8 h-8 rounded-full bg-indigo-950 border border-indigo-700 flex items-center justify-center text-indigo-300 font-semibold text-xs overflow-hidden relative">
+                                            <span>{user.name.charAt(0).toUpperCase()}</span>
+                                            {user.profile_photo_path && (
+                                                <img 
+                                                    src={user.profile_photo_path} 
+                                                    alt={user.name} 
+                                                    className="absolute inset-0 w-full h-full object-cover" 
+                                                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                                                />
                                             )}
                                         </div>
                                         <span className="hidden sm:inline font-medium text-slate-200">{user.name}</span>

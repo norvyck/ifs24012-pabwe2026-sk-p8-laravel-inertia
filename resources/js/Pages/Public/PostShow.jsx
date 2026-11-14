@@ -46,11 +46,15 @@ export default function PostShow({ post }) {
 
                     <div className="mt-6 pt-6 border-t border-slate-800 flex flex-wrap items-center justify-between gap-4 text-sm text-slate-400">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-indigo-950 border border-indigo-700 text-indigo-300 flex items-center justify-center font-bold text-sm">
-                                {post.user?.profile_photo_path ? (
-                                    <img src={post.user.profile_photo_path} alt={post.user.name} className="w-full h-full rounded-full object-cover" />
-                                ) : (
-                                    post.user?.name?.charAt(0) || 'P'
+                            <div className="w-10 h-10 rounded-full bg-indigo-950 border border-indigo-700 text-indigo-300 flex items-center justify-center font-bold text-sm overflow-hidden relative">
+                                <span>{post.user?.name?.charAt(0) || 'P'}</span>
+                                {post.user?.profile_photo_path && (
+                                    <img 
+                                        src={post.user.profile_photo_path} 
+                                        alt={post.user.name} 
+                                        className="absolute inset-0 w-full h-full rounded-full object-cover" 
+                                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                                    />
                                 )}
                             </div>
                             <div>
