@@ -26,16 +26,16 @@ export default function Edit({ user }) {
                 <div className="mb-6">
                     <Link
                         href="/dashboard/posts"
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-slate-900 transition"
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-white transition"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         <span>Back to Dashboard</span>
                     </Link>
                 </div>
 
-                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                    <div className="p-8 bg-slate-50 border-b border-slate-100 flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xl overflow-hidden border-2 border-white shadow-sm">
+                <div className="bg-slate-900 rounded-2xl border border-slate-800 shadow-xl overflow-hidden">
+                    <div className="p-8 bg-slate-950/60 border-b border-slate-800 flex items-center gap-4">
+                        <div className="w-16 h-16 rounded-full bg-indigo-950 text-indigo-300 flex items-center justify-center font-bold text-xl overflow-hidden border-2 border-indigo-700 shadow-md">
                             {user.profile_photo_path ? (
                                 <img src={user.profile_photo_path} alt={user.name} className="w-full h-full object-cover" />
                             ) : (
@@ -43,15 +43,15 @@ export default function Edit({ user }) {
                             )}
                         </div>
                         <div>
-                            <h1 className="text-xl font-bold text-slate-900">{user.name}</h1>
-                            <p className="text-xs text-slate-500">@{user.username} &bull; Role: <span className="uppercase font-semibold text-indigo-600">{user.role}</span></p>
+                            <h1 className="text-xl font-bold text-white">{user.name}</h1>
+                            <p className="text-xs text-slate-400">@{user.username} &bull; Role: <span className="uppercase font-semibold text-indigo-400">{user.role}</span></p>
                         </div>
                     </div>
 
                     <form onSubmit={submit} className="p-8 space-y-6">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">
+                                <label className="block text-sm font-medium text-slate-300 mb-1">
                                     Full Name
                                 </label>
                                 <input
@@ -59,13 +59,13 @@ export default function Edit({ user }) {
                                     value={data.name}
                                     onChange={(e) => setData('name', e.target.value)}
                                     required
-                                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-500 text-sm focus:ring-2 focus:ring-indigo-500"
                                 />
-                                {errors.name && <p className="text-xs text-rose-600 mt-1">{errors.name}</p>}
+                                {errors.name && <p className="text-xs text-rose-400 mt-1">{errors.name}</p>}
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">
+                                <label className="block text-sm font-medium text-slate-300 mb-1">
                                     Email Address
                                 </label>
                                 <input
@@ -73,32 +73,32 @@ export default function Edit({ user }) {
                                     value={data.email}
                                     onChange={(e) => setData('email', e.target.value)}
                                     required
-                                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-500 text-sm focus:ring-2 focus:ring-indigo-500"
                                 />
-                                {errors.email && <p className="text-xs text-rose-600 mt-1">{errors.email}</p>}
+                                {errors.email && <p className="text-xs text-rose-400 mt-1">{errors.email}</p>}
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1">
+                            <label className="block text-sm font-medium text-slate-300 mb-1">
                                 Profile Photo
                             </label>
                             <input
                                 type="file"
                                 accept="image/*"
                                 onChange={(e) => setData('profile_photo', e.target.files[0])}
-                                className="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer border border-slate-300 rounded-xl p-2"
+                                className="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-700 cursor-pointer border border-slate-700 rounded-xl p-2 bg-slate-950"
                             />
-                            {errors.profile_photo && <p className="text-xs text-rose-600 mt-1">{errors.profile_photo}</p>}
+                            {errors.profile_photo && <p className="text-xs text-rose-400 mt-1">{errors.profile_photo}</p>}
                         </div>
 
-                        <div className="pt-6 border-t border-slate-200">
-                            <h3 className="text-sm font-bold text-slate-900 mb-1">Change Password (Optional)</h3>
-                            <p className="text-xs text-slate-500 mb-4">Leave blank if you do not want to change your password.</p>
+                        <div className="pt-6 border-t border-slate-800">
+                            <h3 className="text-sm font-bold text-white mb-1">Change Password (Optional)</h3>
+                            <p className="text-xs text-slate-400 mb-4">Leave blank if you do not want to change your password.</p>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="block text-xs font-semibold uppercase text-slate-600 mb-1">
+                                    <label className="block text-xs font-semibold uppercase text-slate-400 mb-1">
                                         New Password
                                     </label>
                                     <input
@@ -106,13 +106,13 @@ export default function Edit({ user }) {
                                         value={data.password}
                                         onChange={(e) => setData('password', e.target.value)}
                                         placeholder="At least 6 characters"
-                                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500"
+                                        className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-500 text-sm focus:ring-2 focus:ring-indigo-500"
                                     />
-                                    {errors.password && <p className="text-xs text-rose-600 mt-1">{errors.password}</p>}
+                                    {errors.password && <p className="text-xs text-rose-400 mt-1">{errors.password}</p>}
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-semibold uppercase text-slate-600 mb-1">
+                                    <label className="block text-xs font-semibold uppercase text-slate-400 mb-1">
                                         Confirm New Password
                                     </label>
                                     <input
@@ -120,7 +120,7 @@ export default function Edit({ user }) {
                                         value={data.password_confirmation}
                                         onChange={(e) => setData('password_confirmation', e.target.value)}
                                         placeholder="Re-type new password"
-                                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500"
+                                        className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-500 text-sm focus:ring-2 focus:ring-indigo-500"
                                     />
                                 </div>
                             </div>
@@ -130,7 +130,7 @@ export default function Edit({ user }) {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm transition shadow-sm disabled:opacity-50"
+                                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition shadow-sm disabled:opacity-50"
                             >
                                 {processing ? (
                                     <>

@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import '@toast-ui/editor/dist/toastui-editor.css';
+@import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 
 @source '../views/**/*.blade.php';
 @source '../js/**/*.{jsx,js}';
@@ -12,9 +13,11 @@
 
 body {
     font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #020617; /* slate-950 */
+    color: #f1f5f9; /* slate-100 */
 }
 
-/* Ensure TOAST UI Editor & Viewer also inherit Plus Jakarta Sans */
+/* Ensure TOAST UI Editor & Viewer also inherit Plus Jakarta Sans and dark mode colors */
 .toastui-editor-defaultUI,
 .toastui-editor-contents,
 .toastui-editor-contents p,
@@ -26,6 +29,38 @@ body {
 .toastui-editor-contents h6,
 .ProseMirror {
     font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif !important;
+}
+
+/* TOAST UI Viewer Dark Mode text adjustments */
+.toastui-editor-dark .toastui-editor-contents p,
+.toastui-editor-dark .toastui-editor-contents li,
+.toastui-editor-dark .toastui-editor-contents blockquote,
+.toastui-editor-dark .toastui-editor-contents span {
+    color: #cbd5e1 !important; /* slate-300 */
+}
+
+.toastui-editor-dark .toastui-editor-contents h1,
+.toastui-editor-dark .toastui-editor-contents h2,
+.toastui-editor-dark .toastui-editor-contents h3,
+.toastui-editor-dark .toastui-editor-contents h4,
+.toastui-editor-dark .toastui-editor-contents h5,
+.toastui-editor-dark .toastui-editor-contents h6 {
+    color: #f8fafc !important; /* slate-50 */
+    border-bottom-color: #334155 !important;
+}
+
+.toastui-editor-dark .toastui-editor-contents hr {
+    border-color: #334155 !important;
+}
+
+.toastui-editor-dark .toastui-editor-contents code {
+    background-color: #1e293b !important;
+    color: #a5b4fc !important;
+}
+
+.toastui-editor-dark .toastui-editor-contents pre {
+    background-color: #0f172a !important;
+    border: 1px solid #1e293b !important;
 }
 
 /* Cursor pointer hover rules requested by PDF Section 3.6 */

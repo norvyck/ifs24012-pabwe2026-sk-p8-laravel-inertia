@@ -22,7 +22,7 @@ export default function PostShow({ post }) {
                 <div className="mb-8">
                     <Link
                         href="/articles"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-indigo-400 transition"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         <span>Back to Articles</span>
@@ -31,22 +31,22 @@ export default function PostShow({ post }) {
 
                 {/* Article Header */}
                 <header className="mb-10 text-center sm:text-left">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-bold uppercase tracking-wider mb-4">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-800/60 text-indigo-300 text-xs font-bold uppercase tracking-wider mb-4">
                         {post.category}
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                    <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
                         {post.title}
                     </h1>
 
                     {post.excerpt && (
-                        <p className="mt-4 text-lg text-slate-600 leading-relaxed italic">
+                        <p className="mt-4 text-lg text-slate-300 leading-relaxed italic">
                             "{post.excerpt}"
                         </p>
                     )}
 
-                    <div className="mt-6 pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4 text-sm text-slate-500">
+                    <div className="mt-6 pt-6 border-t border-slate-800 flex flex-wrap items-center justify-between gap-4 text-sm text-slate-400">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-sm">
+                            <div className="w-10 h-10 rounded-full bg-indigo-950 border border-indigo-700 text-indigo-300 flex items-center justify-center font-bold text-sm">
                                 {post.user?.profile_photo_path ? (
                                     <img src={post.user.profile_photo_path} alt={post.user.name} className="w-full h-full rounded-full object-cover" />
                                 ) : (
@@ -54,13 +54,13 @@ export default function PostShow({ post }) {
                                 )}
                             </div>
                             <div>
-                                <p className="font-bold text-slate-900">{post.user?.name}</p>
-                                <p className="text-xs text-slate-500">@{post.user?.username}</p>
+                                <p className="font-bold text-white">{post.user?.name}</p>
+                                <p className="text-xs text-slate-400">@{post.user?.username}</p>
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-2 text-xs text-slate-500">
-                            <Calendar className="w-4 h-4 text-slate-400" />
+                        <div className="flex items-center gap-2 text-xs text-slate-400">
+                            <Calendar className="w-4 h-4 text-slate-500" />
                             <span>Published on {formattedDate}</span>
                         </div>
                     </div>
@@ -68,7 +68,7 @@ export default function PostShow({ post }) {
 
                 {/* Cover Image */}
                 {post.cover_image_path && (
-                    <div className="mb-10 rounded-2xl overflow-hidden shadow-sm border border-slate-200 max-h-[480px]">
+                    <div className="mb-10 rounded-2xl overflow-hidden shadow-lg border border-slate-800 max-h-[480px]">
                         <img 
                             src={post.cover_image_path} 
                             alt={post.title} 
@@ -78,37 +78,37 @@ export default function PostShow({ post }) {
                 )}
 
                 {/* Markdown Content (Rendered with TOAST UI Viewer) */}
-                <div className="bg-white rounded-2xl border border-slate-200 p-8 sm:p-12 shadow-sm mb-16">
+                <div className="bg-slate-900 rounded-2xl border border-slate-800 p-8 sm:p-12 shadow-lg mb-16">
                     <MarkdownViewer content={post.content} />
                 </div>
 
                 {/* Bagian Bawah Halaman Baca Artikel: Kartu Ajakan Komunitas (PDF Section 3.6 Item 1) */}
-                <div className="rounded-2xl bg-gradient-to-br from-indigo-900 via-indigo-800 to-purple-900 p-8 sm:p-10 text-white shadow-lg relative overflow-hidden">
-                    <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+                <div className="rounded-2xl bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 border border-indigo-900/60 p-8 sm:p-10 text-white shadow-xl relative overflow-hidden">
+                    <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none"></div>
 
                     <div className="relative z-10 max-w-2xl">
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-indigo-200 text-xs font-semibold mb-4 backdrop-blur">
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-800/60 text-indigo-300 text-xs font-semibold mb-4 backdrop-blur">
                             <Sparkles className="w-3.5 h-3.5" />
                             BlogVerse Community
                         </div>
-                        <h3 className="text-2xl sm:text-3xl font-bold tracking-tight">
+                        <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                             Inspired to Share Your Ideas?
                         </h3>
-                        <p className="mt-2 text-sm sm:text-base text-indigo-100 leading-relaxed">
+                        <p className="mt-2 text-sm sm:text-base text-slate-300 leading-relaxed">
                             Join our community of authors and thinkers. Write high-quality articles with our interactive Markdown editor and AI assistance.
                         </p>
 
                         <div className="mt-6 flex flex-wrap items-center gap-3">
                             <Link
                                 href="/register"
-                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-indigo-900 font-bold text-sm hover:bg-indigo-50 transition shadow-sm"
+                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-bold text-sm hover:bg-indigo-500 transition shadow-sm"
                             >
-                                <UserPlus className="w-4 h-4 text-indigo-600" />
+                                <UserPlus className="w-4 h-4 text-white" />
                                 <span>Join as Writer</span>
                             </Link>
                             <Link
                                 href="/login"
-                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-700/60 hover:bg-indigo-700 text-white border border-indigo-400/30 font-medium text-sm transition"
+                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-sm transition"
                             >
                                 <LogIn className="w-4 h-4" />
                                 <span>Sign In to Your Account</span>

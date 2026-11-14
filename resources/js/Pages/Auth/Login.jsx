@@ -20,24 +20,24 @@ export default function Login() {
             <Head title="Sign In - BlogVerse Pro" />
 
             <div className="min-h-[75vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-md w-full bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div className="max-w-md w-full bg-slate-900 rounded-2xl shadow-xl border border-slate-800 overflow-hidden">
                     {/* Header */}
-                    <div className="p-8 pb-6 bg-slate-50 border-b border-slate-100 text-center">
-                        <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white mx-auto mb-3 shadow-sm">
+                    <div className="p-8 pb-6 bg-slate-900/60 border-b border-slate-800 text-center">
+                        <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white mx-auto mb-3 shadow-md shadow-indigo-950">
                             <LogIn className="w-6 h-6" />
                         </div>
-                        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Welcome Back</h2>
-                        <p className="text-sm text-slate-500 mt-1">Sign in to manage and write your blog articles</p>
+                        <h2 className="text-2xl font-bold text-white tracking-tight">Welcome Back</h2>
+                        <p className="text-sm text-slate-400 mt-1">Sign in to manage and write your blog articles</p>
                     </div>
 
                     {/* Form */}
                     <form onSubmit={submit} className="p-8 space-y-5">
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="login-username">
+                            <label className="block text-sm font-medium text-slate-300 mb-1" htmlFor="login-username">
                                 Username or Email
                             </label>
                             <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
                                     <User className="w-4 h-4" />
                                 </div>
                                 <input
@@ -48,20 +48,20 @@ export default function Login() {
                                     placeholder="Enter username or email"
                                     required
                                     autoComplete="username"
-                                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition"
+                                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition"
                                 />
                             </div>
                             {errors.username && (
-                                <p className="text-xs text-rose-600 mt-1 font-medium">{errors.username}</p>
+                                <p className="text-xs text-rose-400 mt-1 font-medium">{errors.username}</p>
                             )}
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="login-password">
+                            <label className="block text-sm font-medium text-slate-300 mb-1" htmlFor="login-password">
                                 Password
                             </label>
                             <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
                                     <KeyRound className="w-4 h-4" />
                                 </div>
                                 <input
@@ -72,21 +72,21 @@ export default function Login() {
                                     placeholder="Enter your password"
                                     required
                                     autoComplete="current-password"
-                                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition"
+                                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition"
                                 />
                             </div>
                             {errors.password && (
-                                <p className="text-xs text-rose-600 mt-1 font-medium">{errors.password}</p>
+                                <p className="text-xs text-rose-400 mt-1 font-medium">{errors.password}</p>
                             )}
                         </div>
 
                         <div className="flex items-center justify-between">
-                            <label className="flex items-center text-sm text-slate-600 cursor-pointer">
+                            <label className="flex items-center text-sm text-slate-400 cursor-pointer">
                                 <input
                                     type="checkbox"
                                     checked={data.remember}
                                     onChange={(e) => setData('remember', e.target.checked)}
-                                    className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4"
+                                    className="rounded border-slate-700 bg-slate-950 text-indigo-600 focus:ring-indigo-500 w-4 h-4"
                                 />
                                 <span className="ml-2">Remember me</span>
                             </label>
@@ -96,7 +96,7 @@ export default function Login() {
                             id="login-submit"
                             type="submit"
                             disabled={processing}
-                            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm transition shadow-sm disabled:opacity-50"
+                            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm transition shadow-sm disabled:opacity-50"
                         >
                             {processing ? (
                                 <>
@@ -108,15 +108,15 @@ export default function Login() {
                             )}
                         </button>
 
-                        <div className="pt-4 border-t border-slate-100 text-center text-sm text-slate-600">
+                        <div className="pt-4 border-t border-slate-800 text-center text-sm text-slate-400">
                             Don't have an account?{' '}
-                            <Link href="/register" className="font-semibold text-indigo-600 hover:text-indigo-700">
+                            <Link href="/register" className="font-semibold text-indigo-400 hover:text-indigo-300">
                                 Join as Writer
                             </Link>
                         </div>
 
                         <div className="text-center">
-                            <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-800 transition">
+                            <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition">
                                 <ArrowLeft className="w-3.5 h-3.5" />
                                 <span>Back to Home</span>
                             </Link>

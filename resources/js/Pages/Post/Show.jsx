@@ -56,7 +56,7 @@ export default function PostShow({ post }) {
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
                     <Link
                         href="/dashboard/posts"
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-indigo-600 transition"
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-indigo-400 transition"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         <span>Back to Author Dashboard</span>
@@ -67,8 +67,8 @@ export default function PostShow({ post }) {
                             onClick={handleTogglePublish}
                             className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
                                 post.is_published
-                                    ? 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200'
-                                    : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200'
+                                    ? 'bg-amber-950/40 text-amber-300 hover:bg-amber-900/50 border border-amber-800/50'
+                                    : 'bg-emerald-950/40 text-emerald-300 hover:bg-emerald-900/50 border border-emerald-800/50'
                             }`}
                         >
                             {post.is_published ? (
@@ -86,7 +86,7 @@ export default function PostShow({ post }) {
 
                         <button
                             onClick={handleDelete}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 transition"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-rose-950/40 text-rose-300 hover:bg-rose-900/50 border border-rose-800/50 transition"
                         >
                             <Trash2 className="w-3.5 h-3.5" />
                             <span>Delete</span>
@@ -95,32 +95,32 @@ export default function PostShow({ post }) {
                 </div>
 
                 {/* Article Card */}
-                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 sm:p-12 mb-8">
+                <div className="bg-slate-900 rounded-2xl border border-slate-800 shadow-xl p-8 sm:p-12 mb-8">
                     {/* Status & Category */}
                     <div className="flex flex-wrap items-center gap-2 mb-4">
-                        <span className="px-3 py-1 rounded-full text-xs font-bold uppercase bg-indigo-50 text-indigo-700 border border-indigo-100">
+                        <span className="px-3 py-1 rounded-full text-xs font-bold uppercase bg-indigo-950/80 text-indigo-300 border border-indigo-800/60">
                             {post.category}
                         </span>
                         <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
                             post.is_published 
-                                ? 'bg-emerald-100 text-emerald-800' 
-                                : 'bg-slate-100 text-slate-600'
+                                ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-800/60' 
+                                : 'bg-slate-800 text-slate-300 border border-slate-700'
                         }`}>
                             {post.is_published ? 'Published' : 'Draft'}
                         </span>
                     </div>
 
-                    <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
                         {post.title}
                     </h1>
 
                     {post.excerpt && (
-                        <p className="mt-3 text-base text-slate-600 italic">
+                        <p className="mt-3 text-base text-slate-300 italic">
                             "{post.excerpt}"
                         </p>
                     )}
 
-                    <div className="mt-4 pt-4 border-t border-slate-100 flex items-center gap-4 text-xs text-slate-400">
+                    <div className="mt-4 pt-4 border-t border-slate-800 flex items-center gap-4 text-xs text-slate-400">
                         <span>Created: {new Date(post.created_at).toLocaleDateString('en-US')}</span>
                         {post.published_at && (
                             <span>Published: {new Date(post.published_at).toLocaleDateString('en-US')}</span>
@@ -129,30 +129,30 @@ export default function PostShow({ post }) {
                     </div>
 
                     {/* Cover Section */}
-                    <div className="mt-6 mb-8 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <div className="mt-6 mb-8 p-4 bg-slate-950 rounded-xl border border-slate-800">
                         {post.cover_image_path ? (
                             <div className="space-y-3">
-                                <div className="h-64 rounded-lg overflow-hidden border border-slate-200">
+                                <div className="h-64 rounded-lg overflow-hidden border border-slate-800">
                                     <img src={post.cover_image_path} alt={post.title} className="w-full h-full object-cover" />
                                 </div>
                                 <div className="flex items-center justify-between text-xs">
-                                    <span className="text-slate-500 font-medium">Active cover image</span>
+                                    <span className="text-slate-400 font-medium">Active cover image</span>
                                     <button 
                                         onClick={handleDeleteCover} 
-                                        className="text-rose-600 hover:text-rose-800 font-semibold"
+                                        className="text-rose-400 hover:text-rose-300 font-semibold"
                                     >
                                         Remove Cover Image
                                     </button>
                                 </div>
                             </div>
                         ) : (
-                            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+                            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
                                 <div className="flex items-center gap-2">
-                                    <Image className="w-4 h-4 text-slate-400" />
+                                    <Image className="w-4 h-4 text-slate-500" />
                                     <span>This article does not have a cover image yet.</span>
                                 </div>
-                                <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold cursor-pointer">
-                                    <Upload className="w-3.5 h-3.5 text-indigo-600" />
+                                <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-slate-200 font-semibold cursor-pointer">
+                                    <Upload className="w-3.5 h-3.5 text-indigo-400" />
                                     <span>Upload Cover</span>
                                     <input 
                                         type="file" 
@@ -166,7 +166,7 @@ export default function PostShow({ post }) {
                     </div>
 
                     {/* TOAST UI Viewer rendered content */}
-                    <div className="pt-6 border-t border-slate-100">
+                    <div className="pt-6 border-t border-slate-800">
                         <MarkdownViewer content={post.content} />
                     </div>
                 </div>

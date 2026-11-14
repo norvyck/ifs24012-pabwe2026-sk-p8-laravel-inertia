@@ -28,16 +28,16 @@ export default function PostIndex({ posts, filters, categories }) {
             <Head title="Explore Articles - BlogVerse Pro" />
 
             {/* Hero Banner Beranda with CTAs (PDF Requirement Section 3.6 Item 1) */}
-            <div className="bg-gradient-to-b from-indigo-50/60 via-white to-slate-50 border-b border-slate-200">
+            <div className="bg-gradient-to-b from-indigo-950/40 via-slate-900 to-slate-950 border-b border-slate-800">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs font-semibold uppercase tracking-wider mb-6">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-800/60 text-indigo-300 text-xs font-semibold uppercase tracking-wider mb-6">
                         <Sparkles className="w-3.5 h-3.5" />
                         Modern Publishing Platform
                     </div>
-                    <h1 className="text-4xl sm:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight sm:leading-none">
-                        Great Ideas, <span className="text-indigo-600">Thoughtfully Told.</span>
+                    <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight sm:leading-none">
+                        Great Ideas, <span className="text-indigo-400">Thoughtfully Told.</span>
                     </h1>
-                    <p className="mt-5 text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                    <p className="mt-5 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
                         Discover stories, insights, and perspectives from authors worldwide, or share your own thoughts with the community.
                     </p>
 
@@ -45,14 +45,14 @@ export default function PostIndex({ posts, filters, categories }) {
                     <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
                         <Link
                             href="/login"
-                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white border border-slate-300 text-slate-800 font-semibold text-sm hover:border-indigo-600 hover:text-indigo-600 transition shadow-sm"
+                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 font-semibold text-sm hover:border-indigo-500 hover:text-white transition shadow-sm"
                         >
-                            <LogIn className="w-4 h-4 text-slate-500" />
+                            <LogIn className="w-4 h-4 text-slate-400" />
                             <span>Sign In</span>
                         </Link>
                         <Link
                             href="/register"
-                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 text-white font-semibold text-sm hover:bg-indigo-700 transition shadow-md shadow-indigo-200"
+                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 text-white font-semibold text-sm hover:bg-indigo-500 transition shadow-lg shadow-indigo-950"
                         >
                             <UserPlus className="w-4 h-4" />
                             <span>Join as Writer</span>
@@ -67,7 +67,7 @@ export default function PostIndex({ posts, filters, categories }) {
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10">
                     {/* Search Form */}
                     <form onSubmit={handleSearch} className="w-full md:w-96 relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
                             <Search className="w-4 h-4" />
                         </div>
                         <input
@@ -75,11 +75,11 @@ export default function PostIndex({ posts, filters, categories }) {
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             placeholder="Search articles by title or keyword..."
-                            className="w-full pl-10 pr-24 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white shadow-sm"
+                            className="w-full pl-10 pr-24 py-2.5 rounded-xl border border-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-slate-900 text-slate-100 placeholder:text-slate-500 shadow-sm"
                         />
                         <button
                             type="submit"
-                            className="absolute right-1.5 top-1.5 bottom-1.5 px-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium transition"
+                            className="absolute right-1.5 top-1.5 bottom-1.5 px-3 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium transition"
                         >
                             Search
                         </button>
@@ -92,8 +92,8 @@ export default function PostIndex({ posts, filters, categories }) {
                             onClick={() => handleCategoryFilter('')}
                             className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition ${
                                 !activeCategory 
-                                    ? 'bg-slate-900 text-white' 
-                                    : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'
+                                    ? 'bg-slate-800 text-white border border-slate-700' 
+                                    : 'bg-slate-900 border border-slate-800 text-slate-400 hover:bg-slate-800 hover:text-white'
                             }`}
                         >
                             All Categories
@@ -106,7 +106,7 @@ export default function PostIndex({ posts, filters, categories }) {
                                 className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition ${
                                     activeCategory === cat
                                         ? 'bg-indigo-600 text-white shadow-sm'
-                                        : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'
+                                        : 'bg-slate-900 border border-slate-800 text-slate-400 hover:bg-slate-800 hover:text-white'
                                     }`}
                             >
                                 {cat}
@@ -121,51 +121,51 @@ export default function PostIndex({ posts, filters, categories }) {
                         {posts.data.map((post) => (
                             <article 
                                 key={post.id}
-                                className="group bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all flex flex-col overflow-hidden"
+                                className="group bg-slate-900 rounded-2xl border border-slate-800 shadow-md hover:border-slate-700 transition-all flex flex-col overflow-hidden"
                             >
                                 {/* Cover Image if exists */}
                                 {post.cover_image_path ? (
-                                    <div className="h-48 w-full overflow-hidden bg-slate-100 relative">
+                                    <div className="h-48 w-full overflow-hidden bg-slate-800 relative">
                                         <img 
                                             src={post.cover_image_path} 
                                             alt={post.title} 
                                             className="w-full h-full object-cover group-hover:scale-105 transition duration-300" 
                                         />
-                                        <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md text-xs font-bold bg-white/90 text-indigo-700 shadow-sm backdrop-blur">
+                                        <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md text-xs font-bold bg-slate-950/80 text-indigo-300 border border-indigo-800/60 shadow-sm backdrop-blur">
                                             {post.category}
                                         </span>
                                     </div>
                                 ) : (
-                                    <div className="h-32 w-full bg-gradient-to-r from-indigo-50 to-purple-50 p-6 flex items-start justify-between">
-                                        <span className="px-2.5 py-1 rounded-md text-xs font-bold bg-indigo-100 text-indigo-700">
+                                    <div className="h-32 w-full bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950/40 p-6 flex items-start justify-between border-b border-slate-800">
+                                        <span className="px-2.5 py-1 rounded-md text-xs font-bold bg-indigo-950/80 text-indigo-300 border border-indigo-800/60">
                                             {post.category}
                                         </span>
-                                        <BookOpen className="w-5 h-5 text-indigo-300" />
+                                        <BookOpen className="w-5 h-5 text-indigo-400/60" />
                                     </div>
                                 )}
 
                                 <div className="p-6 flex-1 flex flex-col justify-between">
                                     <div>
-                                        <h2 className="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition line-clamp-2">
+                                        <h2 className="text-xl font-bold text-white group-hover:text-indigo-400 transition line-clamp-2">
                                             <Link href={`/articles/${post.slug}`}>
                                                 {post.title}
                                             </Link>
                                         </h2>
-                                        <p className="mt-2 text-sm text-slate-600 line-clamp-3 leading-relaxed">
+                                        <p className="mt-2 text-sm text-slate-400 line-clamp-3 leading-relaxed">
                                             {post.excerpt || 'Read the full article to explore insights and details.'}
                                         </p>
                                     </div>
 
-                                    <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                                    <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
                                         <div className="flex items-center gap-2">
-                                            <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700 text-[10px]">
+                                            <div className="w-6 h-6 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-slate-300 text-[10px]">
                                                 {post.user?.name?.charAt(0) || 'U'}
                                             </div>
-                                            <span className="font-medium text-slate-700">{post.user?.name}</span>
+                                            <span className="font-medium text-slate-300">{post.user?.name}</span>
                                         </div>
                                         <Link 
                                             href={`/articles/${post.slug}`}
-                                            className="inline-flex items-center gap-1 font-semibold text-indigo-600 hover:text-indigo-700 group-hover:translate-x-1 transition"
+                                            className="inline-flex items-center gap-1 font-semibold text-indigo-400 hover:text-indigo-300 group-hover:translate-x-1 transition"
                                         >
                                             <span>Read</span>
                                             <ArrowRight className="w-3.5 h-3.5" />
@@ -176,9 +176,9 @@ export default function PostIndex({ posts, filters, categories }) {
                         ))}
                     </div>
                 ) : (
-                    <div className="bg-white rounded-2xl border border-dashed border-slate-300 p-12 text-center">
-                        <BookOpen className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-                        <h3 className="text-lg font-bold text-slate-800">No Articles Found</h3>
+                    <div className="bg-slate-900 rounded-2xl border border-dashed border-slate-800 p-12 text-center">
+                        <BookOpen className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+                        <h3 className="text-lg font-bold text-slate-200">No Articles Found</h3>
                         <p className="text-sm text-slate-500 mt-1">Try adjusting your search keywords or filter by another category.</p>
                     </div>
                 )}
@@ -195,7 +195,7 @@ export default function PostIndex({ posts, filters, categories }) {
                                     link.active
                                         ? 'bg-indigo-600 text-white font-bold'
                                         : link.url
-                                        ? 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
+                                        ? 'bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800'
                                         : 'opacity-40 pointer-events-none'
                                 }`}
                             />

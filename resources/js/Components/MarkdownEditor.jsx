@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 
 export default function MarkdownEditor({ initialValue = '', onChange, height = '450px' }) {
     const containerRef = useRef(null);
@@ -15,6 +16,7 @@ export default function MarkdownEditor({ initialValue = '', onChange, height = '
             initialEditType: 'markdown',
             previewStyle: 'vertical',
             initialValue: initialValue || '',
+            theme: 'dark',
             events: {
                 change: () => {
                     if (onChange && editorInstance.current) {
@@ -42,7 +44,7 @@ export default function MarkdownEditor({ initialValue = '', onChange, height = '
     }, [initialValue]);
 
     return (
-        <div className="border border-slate-300 rounded-lg overflow-hidden bg-white">
+        <div className="border border-slate-700 rounded-xl overflow-hidden bg-slate-900">
             <div ref={containerRef} />
         </div>
     );

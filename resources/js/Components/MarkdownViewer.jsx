@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 
 export default function MarkdownViewer({ content = '' }) {
     const containerRef = useRef(null);
@@ -13,6 +14,7 @@ export default function MarkdownViewer({ content = '' }) {
             el: containerRef.current,
             viewer: true,
             initialValue: content || '',
+            theme: 'dark',
         });
 
         return () => {
@@ -24,7 +26,7 @@ export default function MarkdownViewer({ content = '' }) {
     }, [content]);
 
     return (
-        <div className="prose max-w-none text-slate-800 leading-relaxed font-sans">
+        <div className="toastui-editor-dark prose prose-invert max-w-none text-slate-200 leading-relaxed font-sans">
             <div ref={containerRef} />
         </div>
     );
