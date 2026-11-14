@@ -63,7 +63,7 @@ class PostController extends Controller
         $this->postService->createPost($request->user(), $validated, $coverImage);
 
         return redirect()->route('dashboard.posts.index')
-            ->with('success', 'Artikel berhasil dibuat!');
+            ->with('success', 'Article created successfully!');
     }
 
     /**
@@ -73,7 +73,7 @@ class PostController extends Controller
     {
         $post = $this->postRepository->findById((int) $postId);
         if (! $post) {
-            abort(404, 'Postingan tidak ditemukan.');
+            abort(404, 'Article not found.');
         }
 
         return Inertia::render('Post/Show', [
@@ -88,7 +88,7 @@ class PostController extends Controller
     {
         $post = $this->postRepository->findById((int) $postId);
         if (! $post) {
-            abort(404, 'Postingan tidak ditemukan.');
+            abort(404, 'Article not found.');
         }
 
         $validated = $request->validate([
@@ -104,7 +104,7 @@ class PostController extends Controller
         $this->postService->updatePost($post, $validated, $coverImage);
 
         return redirect()->back()
-            ->with('success', 'Artikel berhasil diperbarui!');
+            ->with('success', 'Article updated successfully!');
     }
 
     /**
@@ -114,14 +114,14 @@ class PostController extends Controller
     {
         $post = $this->postRepository->findById((int) $postId);
         if (! $post) {
-            abort(404, 'Postingan tidak ditemukan.');
+            abort(404, 'Article not found.');
         }
 
         $this->postService->deleteCover($post);
         $this->postRepository->delete($post);
 
         return redirect()->route('dashboard.posts.index')
-            ->with('success', 'Artikel berhasil dihapus!');
+            ->with('success', 'Article deleted successfully!');
     }
 
     /**
@@ -131,14 +131,14 @@ class PostController extends Controller
     {
         $post = $this->postRepository->findById((int) $postId);
         if (! $post) {
-            abort(404, 'Postingan tidak ditemukan.');
+            abort(404, 'Article not found.');
         }
 
         $this->postService->togglePublish($post);
-        $statusMsg = $post->fresh()->is_published ? 'dipublikasikan' : 'dijadikan draf';
+        $statusMsg = $post->fresh()->is_published ? 'published' : 'draft';
 
         return redirect()->back()
-            ->with('success', "Status artikel berhasil diubah menjadi {$statusMsg}!");
+            ->with('success', "Article status updated to {$statusMsg}!");
     }
 
     /**
@@ -148,7 +148,7 @@ class PostController extends Controller
     {
         $post = $this->postRepository->findById((int) $postId);
         if (! $post) {
-            abort(404, 'Postingan tidak ditemukan.');
+            abort(404, 'Article not found.');
         }
 
         $request->validate([
@@ -158,7 +158,7 @@ class PostController extends Controller
         $this->postService->uploadCover($post, $request->file('cover_image'));
 
         return redirect()->back()
-            ->with('success', 'Foto sampul berhasil diunggah!');
+            ->with('success', 'Cover image uploaded successfully!');
     }
 
     /**
@@ -168,13 +168,13 @@ class PostController extends Controller
     {
         $post = $this->postRepository->findById((int) $postId);
         if (! $post) {
-            abort(404, 'Postingan tidak ditemukan.');
+            abort(404, 'Article not found.');
         }
 
         $this->postService->deleteCover($post);
 
         return redirect()->back()
-            ->with('success', 'Foto sampul berhasil dihapus!');
+            ->with('success', 'Cover image removed successfully!');
     }
 
     /**
@@ -185,7 +185,7 @@ class PostController extends Controller
         $user = $request->user();
         $posts = $this->postRepository->getAllUserPosts($user->id);
 
-        return $this->excelService->exportPosts($posts, "artikel_{$user->username}.xlsx");
+        return $this->excelService->exportPosts($posts, "posts_{$user->username}.xlsx");
     }
 
     /**
@@ -201,11 +201,11 @@ class PostController extends Controller
 
         if ($result['imported'] > 0) {
             return redirect()->back()
-                ->with('success', "Berhasil mengimpor {$result['imported']} artikel.");
+                ->with('success', "Successfully imported {$result['imported']} articles.");
         }
 
         return redirect()->back()
-            ->with('error', 'Tidak ada artikel yang berhasil diimpor. Periksa format berkas Excel.');
+            ->with('error', 'No articles were imported. Please check the Excel file format.');
     }
 
     /**
@@ -249,6 +249,6 @@ class PostController extends Controller
         $saved = $this->postService->saveBatchAiPosts($request->user(), $validated['posts']);
 
         return redirect()->route('dashboard.posts.index')
-            ->with('success', 'Berhasil menyimpan '.count($saved).' artikel hasil AI ke dalam draf.');
+            ->with('success', 'Successfully saved '.count($saved).' AI-generated articles to drafts.');
     }
 }

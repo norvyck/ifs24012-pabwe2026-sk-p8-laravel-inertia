@@ -19,8 +19,8 @@ export default function Edit({ user }) {
     };
 
     return (
-        <AppLayout title="Profil Penulis">
-            <Head title="Edit Profil - BlogVerse Pro" />
+        <AppLayout title="Author Profile">
+            <Head title="Edit Profile - BlogVerse Pro" />
 
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
                 <div className="mb-6">
@@ -29,7 +29,7 @@ export default function Edit({ user }) {
                         className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-slate-900 transition"
                     >
                         <ArrowLeft className="w-4 h-4" />
-                        <span>Kembali ke Dashboard</span>
+                        <span>Back to Dashboard</span>
                     </Link>
                 </div>
 
@@ -52,7 +52,7 @@ export default function Edit({ user }) {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div>
                                 <label className="block text-sm font-medium text-slate-700 mb-1">
-                                    Nama Lengkap
+                                    Full Name
                                 </label>
                                 <input
                                     type="text"
@@ -66,7 +66,7 @@ export default function Edit({ user }) {
 
                             <div>
                                 <label className="block text-sm font-medium text-slate-700 mb-1">
-                                    Alamat Email
+                                    Email Address
                                 </label>
                                 <input
                                     type="email"
@@ -81,7 +81,7 @@ export default function Edit({ user }) {
 
                         <div>
                             <label className="block text-sm font-medium text-slate-700 mb-1">
-                                Foto Profil Baru
+                                Profile Photo
                             </label>
                             <input
                                 type="file"
@@ -93,19 +93,19 @@ export default function Edit({ user }) {
                         </div>
 
                         <div className="pt-6 border-t border-slate-200">
-                            <h3 className="text-sm font-bold text-slate-900 mb-1">Ubah Kata Sandi (Opsional)</h3>
-                            <p className="text-xs text-slate-500 mb-4">Kosongkan jika Anda tidak ingin mengubah kata sandi.</p>
+                            <h3 className="text-sm font-bold text-slate-900 mb-1">Change Password (Optional)</h3>
+                            <p className="text-xs text-slate-500 mb-4">Leave blank if you do not want to change your password.</p>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div>
                                     <label className="block text-xs font-semibold uppercase text-slate-600 mb-1">
-                                        Kata Sandi Baru
+                                        New Password
                                     </label>
                                     <input
                                         type="password"
                                         value={data.password}
                                         onChange={(e) => setData('password', e.target.value)}
-                                        placeholder="Minimal 6 karakter"
+                                        placeholder="At least 6 characters"
                                         className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500"
                                     />
                                     {errors.password && <p className="text-xs text-rose-600 mt-1">{errors.password}</p>}
@@ -113,13 +113,13 @@ export default function Edit({ user }) {
 
                                 <div>
                                     <label className="block text-xs font-semibold uppercase text-slate-600 mb-1">
-                                        Konfirmasi Kata Sandi Baru
+                                        Confirm New Password
                                     </label>
                                     <input
                                         type="password"
                                         value={data.password_confirmation}
                                         onChange={(e) => setData('password_confirmation', e.target.value)}
-                                        placeholder="Ulangi kata sandi"
+                                        placeholder="Re-type new password"
                                         className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500"
                                     />
                                 </div>
@@ -135,10 +135,10 @@ export default function Edit({ user }) {
                                 {processing ? (
                                     <>
                                         <Loader2 className="w-4 h-4 animate-spin" />
-                                        <span>Menyimpan...</span>
+                                        <span>Saving...</span>
                                     </>
                                 ) : (
-                                    <span>Simpan Perubahan Profil</span>
+                                    <span>Save Changes</span>
                                 )}
                             </button>
                         </div>

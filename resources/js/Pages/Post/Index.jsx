@@ -72,7 +72,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
             title: '',
             category: categories[0] || 'Teknologi',
             excerpt: '',
-            content: '## Pendahuluan\n\nTulis artikel Anda di sini...',
+            content: '## Introduction\n\nWrite your article here...',
             cover_image: null,
             is_published: false,
         });
@@ -127,7 +127,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
     };
 
     const handleDeletePost = (postId) => {
-        if (confirm('Apakah Anda yakin ingin menghapus artikel ini? Tindakan ini tidak dapat dibatalkan.')) {
+        if (confirm('Are you sure you want to delete this article? This action cannot be undone.')) {
             router.delete(`/dashboard/posts/${postId}`, {
                 preserveScroll: true,
                 onFinish: () => setOpenKebabId(null),
@@ -160,7 +160,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                 setAiGeneratedPosts(data.posts);
             }
         } catch (err) {
-            alert('Gagal menghasilkan artikel: ' + err.message);
+            alert('Failed to generate articles: ' + err.message);
         } finally {
             setIsGeneratingAi(false);
         }
@@ -198,18 +198,18 @@ export default function PostIndex({ posts, stats, filters, categories }) {
     };
 
     return (
-        <AppLayout title="Dashboard Penulis">
-            <Head title="Kelola Artikel - BlogVerse Pro" />
+        <AppLayout title="Author Dashboard">
+            <Head title="Manage Articles - BlogVerse Pro" />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Header Page */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
                     <div>
                         <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                            Dashboard Artikel
+                            Author Dashboard
                         </h1>
                         <p className="text-sm text-slate-500 mt-1">
-                            Kelola publikasi, sunting konten Markdown, serta ekspor cadangan tulisan Anda.
+                            Manage publications, edit Markdown content, and import/export your articles.
                         </p>
                     </div>
 
@@ -220,7 +220,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm transition shadow-sm"
                         >
                             <Plus className="w-4 h-4" />
-                            <span>Tulis Artikel Baru</span>
+                            <span>Write New Post</span>
                         </button>
 
                         <button
@@ -228,25 +228,25 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-medium text-sm transition shadow-sm"
                         >
                             <Sparkles className="w-4 h-4" />
-                            <span>Buat dengan AI</span>
+                            <span>Create with AI</span>
                         </button>
 
                         <a
                             href="/dashboard/posts/export"
                             className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium text-sm transition shadow-sm"
-                            title="Unduh semua artikel ke file Excel (.xlsx)"
+                            title="Export all articles to Excel (.xlsx)"
                         >
                             <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
-                            <span>Ekspor</span>
+                            <span>Export</span>
                         </a>
 
                         <button
                             onClick={() => setIsImportModalOpen(true)}
                             className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium text-sm transition shadow-sm"
-                            title="Impor artikel dari Excel"
+                            title="Import articles from Excel"
                         >
                             <Upload className="w-4 h-4 text-indigo-600" />
-                            <span>Impor</span>
+                            <span>Import</span>
                         </button>
                     </div>
                 </div>
@@ -255,9 +255,9 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
                     <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm flex items-center justify-between">
                         <div>
-                            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Artikel</p>
+                            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Posts</p>
                             <h3 className="text-3xl font-extrabold text-slate-900 mt-1">{stats?.total || 0}</h3>
-                            <p className="text-xs text-slate-400 mt-1">Keseluruhan tulisan tersimpan</p>
+                            <p className="text-xs text-slate-400 mt-1">All saved articles</p>
                         </div>
                         <div className="w-12 h-12 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
                             <Layers className="w-6 h-6" />
@@ -266,9 +266,9 @@ export default function PostIndex({ posts, stats, filters, categories }) {
 
                     <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm flex items-center justify-between">
                         <div>
-                            <p className="text-xs font-semibold uppercase tracking-wider text-emerald-600">Total Selesai</p>
+                            <p className="text-xs font-semibold uppercase tracking-wider text-emerald-600">Total Published</p>
                             <h3 className="text-3xl font-extrabold text-slate-900 mt-1">{stats?.published || 0}</h3>
-                            <p className="text-xs text-slate-400 mt-1">Artikel aktif terpublikasi (is_published = true)</p>
+                            <p className="text-xs text-slate-400 mt-1">Live in public catalog (is_published = true)</p>
                         </div>
                         <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600">
                             <CheckCircle className="w-6 h-6" />
@@ -277,9 +277,9 @@ export default function PostIndex({ posts, stats, filters, categories }) {
 
                     <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm flex items-center justify-between">
                         <div>
-                            <p className="text-xs font-semibold uppercase tracking-wider text-amber-600">Belum Selesai</p>
+                            <p className="text-xs font-semibold uppercase tracking-wider text-amber-600">Drafts</p>
                             <h3 className="text-3xl font-extrabold text-slate-900 mt-1">{stats?.draft || 0}</h3>
-                            <p className="text-xs text-slate-400 mt-1">Draf tulisan pribadi (is_published = false)</p>
+                            <p className="text-xs text-slate-400 mt-1">Personal drafts (is_published = false)</p>
                         </div>
                         <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600">
                             <Clock className="w-6 h-6" />
@@ -297,7 +297,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                             type="text"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            placeholder="Cari berdasarkan judul atau kategori..."
+                            placeholder="Filter by title or keywords..."
                             className="w-full pl-10 pr-24 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white shadow-sm"
                         />
                         <button
@@ -315,11 +315,11 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                         <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
                             <thead className="bg-slate-50 text-slate-600 font-semibold text-xs uppercase tracking-wider">
                                 <tr>
-                                    <th scope="col" className="px-6 py-4">Judul Artikel</th>
-                                    <th scope="col" className="px-6 py-4">Kategori</th>
+                                    <th scope="col" className="px-6 py-4">Article Title</th>
+                                    <th scope="col" className="px-6 py-4">Category</th>
                                     <th scope="col" className="px-6 py-4">Status</th>
-                                    <th scope="col" className="px-6 py-4">Dibuat / Terbit</th>
-                                    <th scope="col" className="px-6 py-4 text-right">Tindakan</th>
+                                    <th scope="col" className="px-6 py-4">Date</th>
+                                    <th scope="col" className="px-6 py-4 text-right">Actions</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-200">
@@ -350,30 +350,30 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                                             ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
                                                             : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                                                     }`}
-                                                    title="Klik untuk mengubah status publikasi"
+                                                    title="Click to toggle publish status"
                                                 >
                                                     {post.is_published ? (
                                                         <>
                                                             <ToggleRight className="w-4 h-4 text-emerald-600" />
-                                                            <span>Publik</span>
+                                                            <span>Published</span>
                                                         </>
                                                     ) : (
                                                         <>
                                                             <ToggleLeft className="w-4 h-4 text-slate-400" />
-                                                            <span>Draf</span>
+                                                            <span>Draft</span>
                                                         </>
                                                     )}
                                                 </button>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-xs text-slate-500">
-                                                {new Date(post.created_at).toLocaleDateString('id-ID')}
+                                                {new Date(post.created_at).toLocaleDateString('en-US')}
                                             </td>
                                             {/* Menu Tindakan Kebab ( ⋮ ) (PDF Section 3.6 Item 3) */}
                                             <td className="px-6 py-4 whitespace-nowrap text-right relative">
                                                 <button
                                                     onClick={() => setOpenKebabId(openKebabId === post.id ? null : post.id)}
                                                     className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition"
-                                                    title="Menu Tindakan"
+                                                    title="Actions Menu"
                                                 >
                                                     <MoreVertical className="w-5 h-5" />
                                                 </button>
@@ -386,21 +386,21 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                                             className="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-indigo-600 hover:bg-indigo-50 transition"
                                                         >
                                                             <Eye className="w-4 h-4 text-indigo-600" />
-                                                            <span>Detail</span>
+                                                            <span>View Details</span>
                                                         </Link>
                                                         <button
                                                             onClick={() => openEditModal(post)}
                                                             className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-indigo-600 hover:bg-indigo-50 transition text-left"
                                                         >
                                                             <Pencil className="w-4 h-4 text-indigo-600" />
-                                                            <span>Ubah Edit</span>
+                                                            <span>Edit Post</span>
                                                         </button>
                                                         <button
                                                             onClick={() => handleTogglePublish(post.id)}
                                                             className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 transition text-left"
                                                         >
                                                             <Clock className="w-4 h-4 text-slate-500" />
-                                                            <span>{post.is_published ? 'Jadikan Draf' : 'Publikasikan'}</span>
+                                                            <span>{post.is_published ? 'Set as Draft' : 'Publish'}</span>
                                                         </button>
                                                         <div className="my-1 border-t border-slate-100"></div>
                                                         <button
@@ -408,7 +408,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                                             className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-red-600 hover:bg-red-50 transition text-left"
                                                         >
                                                             <Trash2 className="w-4 h-4 text-red-600" />
-                                                            <span>Hapus</span>
+                                                            <span>Delete</span>
                                                         </button>
                                                     </div>
                                                 )}
@@ -419,8 +419,8 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                     <tr>
                                         <td colSpan="5" className="px-6 py-12 text-center text-slate-500">
                                             <FileText className="w-10 h-10 text-slate-300 mx-auto mb-2" />
-                                            <p className="font-medium text-slate-700">Belum ada artikel di dashboard Anda</p>
-                                            <p className="text-xs text-slate-400 mt-1">Mulai tulis artikel baru atau gunakan bantuan AI.</p>
+                                            <p className="font-medium text-slate-700">No articles in your dashboard yet</p>
+                                            <p className="text-xs text-slate-400 mt-1">Start writing a new article or create drafts with AI.</p>
                                         </td>
                                     </tr>
                                 )}
@@ -432,7 +432,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                     {posts?.links?.length > 3 && (
                         <div className="px-6 py-4 border-t border-slate-200 flex items-center justify-between">
                             <span className="text-xs text-slate-500">
-                                Menampilkan {posts.from || 0} - {posts.to || 0} dari {posts.total} artikel
+                                Showing {posts.from || 0} - {posts.to || 0} of {posts.total} articles
                             </span>
                             <div className="flex items-center gap-1">
                                 {posts.links.map((link, idx) => (
@@ -466,10 +466,10 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                             </div>
                             <div>
                                 <h2 className="text-lg font-bold tracking-tight">
-                                    {editingPost ? 'Ubah Artikel' : 'Tulis Artikel Baru'}
+                                    {editingPost ? 'Edit Post' : 'Write New Post'}
                                 </h2>
                                 <p className="text-xs text-slate-400">
-                                    {editingPost ? `Menyunting: ${editingPost.title}` : 'Gunakan format Markdown untuk tata letak tulisan yang kaya'}
+                                    {editingPost ? `Editing: ${editingPost.title}` : 'Use Markdown formatting for rich article formatting'}
                                 </p>
                             </div>
                         </div>
@@ -486,13 +486,13 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div className="md:col-span-2 space-y-2">
                                 <label className="block text-sm font-semibold text-slate-800">
-                                    Judul Artikel <span className="text-rose-600">*</span>
+                                    Article Title <span className="text-rose-600">*</span>
                                 </label>
                                 <input
                                     type="text"
                                     value={postData.title}
                                     onChange={(e) => setPostData('title', e.target.value)}
-                                    placeholder="Masukkan judul artikel..."
+                                    placeholder="Enter article title..."
                                     className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 font-medium"
                                     required
                                 />
@@ -501,7 +501,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
 
                             <div className="space-y-2">
                                 <label className="block text-sm font-semibold text-slate-800">
-                                    Kategori <span className="text-rose-600">*</span>
+                                    Category <span className="text-rose-600">*</span>
                                 </label>
                                 <select
                                     value={postData.category}
@@ -517,13 +517,13 @@ export default function PostIndex({ posts, stats, filters, categories }) {
 
                         <div className="space-y-2">
                             <label className="block text-sm font-semibold text-slate-800">
-                                Ringkasan Pemikat (Excerpt / 1-2 Kalimat)
+                                Excerpt / Teaser Summary (1-2 sentences)
                             </label>
                             <textarea
                                 value={postData.excerpt}
                                 onChange={(e) => setPostData('excerpt', e.target.value)}
                                 rows="2"
-                                placeholder="Tuliskan ringkasan singkat pengantar tulisan..."
+                                placeholder="Write a brief teaser summary for readers..."
                                 className="w-full px-4 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500"
                             ></textarea>
                         </div>
@@ -531,7 +531,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                         {/* Foto Sampul */}
                         <div className="space-y-2">
                             <label className="block text-sm font-semibold text-slate-800">
-                                Foto Sampul (Cover Image)
+                                Cover Image
                             </label>
                             <input
                                 type="file"
@@ -544,7 +544,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                         {/* TOAST UI Editor */}
                         <div className="space-y-2">
                             <label className="block text-sm font-semibold text-slate-800">
-                                Konten Lengkap Artikel (Format Markdown) <span className="text-rose-600">*</span>
+                                Article Content (Markdown Format) <span className="text-rose-600">*</span>
                             </label>
                             <MarkdownEditor
                                 initialValue={postData.content}
@@ -564,7 +564,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                     className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300"
                                 />
                                 <span className="text-sm font-medium text-slate-800">
-                                    Publikasikan langsung ke katalog artikel publik
+                                    Publish immediately to public catalog
                                 </span>
                             </label>
                         </div>
@@ -577,7 +577,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                             onClick={() => setIsAddModalOpen(false)}
                             className="px-5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-sm transition"
                         >
-                            Batal
+                            Cancel
                         </button>
                         <button
                             type="button"
@@ -588,10 +588,10 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                             {postProcessing ? (
                                 <>
                                     <Loader2 className="w-4 h-4 animate-spin" />
-                                    <span>Menyimpan...</span>
+                                    <span>Saving...</span>
                                 </>
                             ) : (
-                                <span>{editingPost ? 'Simpan Perubahan' : 'Simpan Artikel'}</span>
+                                <span>{editingPost ? 'Save Changes' : 'Save Post'}</span>
                             )}
                         </button>
                     </div>
@@ -618,13 +618,13 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                             <form onSubmit={handleGenerateAi} className="space-y-4">
                                 <div>
                                     <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
-                                        Topik atau Kata Kunci
+                                        Topic or Keywords
                                     </label>
                                     <input
                                         type="text"
                                         value={aiTopic}
                                         onChange={(e) => setAiTopic(e.target.value)}
-                                        placeholder="Contoh: Arsitektur Microservices dengan Laravel"
+                                        placeholder="e.g. Modern Web Development with React and Inertia"
                                         required
                                         className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-purple-500"
                                     />
@@ -634,7 +634,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                     <div>
                                         {/* Input type="number" with bounds validation (PDF Section 3.6 Item 5) */}
                                         <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
-                                            Jumlah Artikel (1 - 5)
+                                            Number of Articles (1 - 5)
                                         </label>
                                         <input
                                             type="number"
@@ -648,7 +648,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                     </div>
                                     <div>
                                         <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
-                                            Kategori Target
+                                            Target Category
                                         </label>
                                         <select
                                             value={aiCategory}
@@ -670,12 +670,12 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                     {isGeneratingAi ? (
                                         <>
                                             <Loader2 className="w-4 h-4 animate-spin" />
-                                            <span>Menghasilkan Konten dengan AI...</span>
+                                            <span>Generating content with AI...</span>
                                         </>
                                     ) : (
                                         <>
                                             <Sparkles className="w-4 h-4" />
-                                            <span>Hasilkan {aiCount} Draf Artikel</span>
+                                            <span>Generate {aiCount} Draft Articles</span>
                                         </>
                                     )}
                                 </button>
@@ -685,7 +685,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                             {aiGeneratedPosts.length > 0 && (
                                 <div className="pt-4 border-t border-slate-200 space-y-4">
                                     <h4 className="text-sm font-bold text-slate-800">
-                                        Hasil Generasi AI ({aiGeneratedPosts.length} artikel siap disimpan):
+                                        AI Results ({aiGeneratedPosts.length} ready to save):
                                     </h4>
                                     <div className="space-y-3 max-h-60 overflow-y-auto pr-1">
                                         {aiGeneratedPosts.map((post, idx) => (
@@ -704,7 +704,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                         onClick={handleSaveAiBatch}
                                         className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition shadow-sm"
                                     >
-                                        Simpan Semua ke Draf Saya
+                                        Save All to My Drafts
                                     </button>
                                 </div>
                             )}
@@ -720,7 +720,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                         <div className="flex items-center justify-between mb-4">
                             <h3 className="font-bold text-lg text-slate-900 flex items-center gap-2">
                                 <Upload className="w-5 h-5 text-indigo-600" />
-                                <span>Impor Artikel dari Excel</span>
+                                <span>Import Articles from Excel</span>
                             </h3>
                             <button onClick={() => setIsImportModalOpen(false)} className="text-slate-400 hover:text-slate-600">
                                 <X className="w-5 h-5" />
@@ -729,7 +729,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
 
                         <form onSubmit={handleImportSubmit} className="space-y-4">
                             <p className="text-xs text-slate-500 leading-relaxed">
-                                Unggah berkas spreadsheet (<strong>.xlsx, .xls, .csv</strong>) dengan format kolom Judul, Kategori, dan Konten.
+                                Upload a spreadsheet file (<strong>.xlsx, .xls, .csv</strong>) with Title, Category, and Content columns.
                             </p>
 
                             <input
@@ -746,7 +746,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                     onClick={() => setIsImportModalOpen(false)}
                                     className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100"
                                 >
-                                    Batal
+                                    Cancel
                                 </button>
                                 <button
                                     type="submit"
@@ -754,7 +754,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                     className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold transition disabled:opacity-50"
                                 >
                                     {isImporting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
-                                    <span>Mulai Impor</span>
+                                    <span>Start Import</span>
                                 </button>
                             </div>
                         </form>

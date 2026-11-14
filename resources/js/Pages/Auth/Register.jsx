@@ -18,8 +18,8 @@ export default function Register() {
     };
 
     return (
-        <AppLayout title="Daftar Penulis">
-            <Head title="Daftar Penulis - BlogVerse Pro" />
+        <AppLayout title="Join as Writer">
+            <Head title="Register as Writer - BlogVerse Pro" />
 
             <div className="min-h-[75vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
@@ -28,15 +28,15 @@ export default function Register() {
                         <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white mx-auto mb-3 shadow-sm">
                             <UserPlus className="w-6 h-6" />
                         </div>
-                        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Bergabung Menjadi Penulis</h2>
-                        <p className="text-sm text-slate-500 mt-1">Publikasikan ide brilian dan kelola portofolio artikel Anda</p>
+                        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Join as Writer</h2>
+                        <p className="text-sm text-slate-500 mt-1">Publish your ideas and build your blog portfolio</p>
                     </div>
 
                     {/* Form */}
                     <form onSubmit={submit} className="p-8 space-y-4">
                         <div>
                             <label className="block text-sm font-medium text-slate-700 mb-1">
-                                Nama Lengkap
+                                Full Name
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -46,7 +46,7 @@ export default function Register() {
                                     type="text"
                                     value={data.name}
                                     onChange={(e) => setData('name', e.target.value)}
-                                    placeholder="Contoh: Budi Santoso"
+                                    placeholder="e.g. John Doe"
                                     required
                                     className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition"
                                 />
@@ -56,7 +56,7 @@ export default function Register() {
 
                         <div>
                             <label className="block text-sm font-medium text-slate-700 mb-1">
-                                Username Unik
+                                Username
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -66,7 +66,7 @@ export default function Register() {
                                     type="text"
                                     value={data.username}
                                     onChange={(e) => setData('username', e.target.value)}
-                                    placeholder="Contoh: budisantoso"
+                                    placeholder="e.g. johndoe"
                                     required
                                     className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition"
                                 />
@@ -76,7 +76,7 @@ export default function Register() {
 
                         <div>
                             <label className="block text-sm font-medium text-slate-700 mb-1">
-                                Alamat Email
+                                Email Address
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -86,7 +86,7 @@ export default function Register() {
                                     type="email"
                                     value={data.email}
                                     onChange={(e) => setData('email', e.target.value)}
-                                    placeholder="nama@email.com"
+                                    placeholder="name@example.com"
                                     required
                                     className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition"
                                 />
@@ -96,7 +96,7 @@ export default function Register() {
 
                         <div>
                             <label className="block text-sm font-medium text-slate-700 mb-1">
-                                Kata Sandi
+                                Password
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -106,7 +106,7 @@ export default function Register() {
                                     type="password"
                                     value={data.password}
                                     onChange={(e) => setData('password', e.target.value)}
-                                    placeholder="Minimal 6 karakter"
+                                    placeholder="At least 6 characters"
                                     required
                                     className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition"
                                 />
@@ -116,7 +116,7 @@ export default function Register() {
 
                         <div>
                             <label className="block text-sm font-medium text-slate-700 mb-1">
-                                Konfirmasi Kata Sandi
+                                Confirm Password
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -126,7 +126,7 @@ export default function Register() {
                                     type="password"
                                     value={data.password_confirmation}
                                     onChange={(e) => setData('password_confirmation', e.target.value)}
-                                    placeholder="Ulangi kata sandi"
+                                    placeholder="Re-type your password"
                                     required
                                     className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition"
                                 />
@@ -141,24 +141,24 @@ export default function Register() {
                             {processing ? (
                                 <>
                                     <Loader2 className="w-4 h-4 animate-spin" />
-                                    <span>Mendaftarkan...</span>
+                                    <span>Registering...</span>
                                 </>
                             ) : (
-                                <span>Daftar Akun Baru</span>
+                                <span>Create Account</span>
                             )}
                         </button>
 
                         <div className="pt-4 border-t border-slate-100 text-center text-sm text-slate-600">
-                            Sudah memiliki akun?{' '}
+                            Already have an account?{' '}
                             <Link href="/login" className="font-semibold text-indigo-600 hover:text-indigo-700">
-                                Masuk ke akun Anda
+                                Sign In
                             </Link>
                         </div>
 
                         <div className="text-center">
                             <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-800 transition">
                                 <ArrowLeft className="w-3.5 h-3.5" />
-                                <span>Kembali ke Beranda Publik</span>
+                                <span>Back to Home</span>
                             </Link>
                         </div>
                     </form>

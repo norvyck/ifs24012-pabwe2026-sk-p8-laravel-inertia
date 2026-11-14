@@ -70,7 +70,7 @@ class AuthController extends Controller
         $this->registerAction->execute($request, $validated);
 
         return redirect()->route('dashboard.posts.index')
-            ->with('success', 'Akun berhasil didaftarkan! Selamat datang di BlogVerse Pro.');
+            ->with('success', 'Account registered successfully! Welcome to BlogVerse Pro.');
     }
 
     /**

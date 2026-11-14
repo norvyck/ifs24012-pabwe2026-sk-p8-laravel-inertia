@@ -42,6 +42,6 @@ class ProfileController extends Controller
         $this->profileService->updateProfile($user, $validated, $request->file('profile_photo'));
 
         return redirect()->back()
-            ->with('success', 'Profil berhasil diperbarui!');
+            ->with('success', 'Profile updated successfully!');
     }
 }

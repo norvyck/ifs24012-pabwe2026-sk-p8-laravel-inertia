@@ -23,7 +23,7 @@ export default function PostShow({ post }) {
     };
 
     const handleDelete = () => {
-        if (confirm('Yakin ingin menghapus artikel ini?')) {
+        if (confirm('Are you sure you want to delete this article?')) {
             router.delete(`/dashboard/posts/${post.id}`);
         }
     };
@@ -42,14 +42,14 @@ export default function PostShow({ post }) {
     };
 
     const handleDeleteCover = () => {
-        if (confirm('Hapus foto sampul artikel ini?')) {
+        if (confirm('Remove the cover image for this article?')) {
             router.delete(`/dashboard/posts/${post.id}/cover`);
         }
     };
 
     return (
         <AppLayout title={post.title}>
-            <Head title={`Detail: ${post.title} - BlogVerse Pro`} />
+            <Head title={`Article: ${post.title} - BlogVerse Pro`} />
 
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
                 {/* Back and Action Buttons */}
@@ -59,7 +59,7 @@ export default function PostShow({ post }) {
                         className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-indigo-600 transition"
                     >
                         <ArrowLeft className="w-4 h-4" />
-                        <span>Kembali ke Dashboard Penulis</span>
+                        <span>Back to Author Dashboard</span>
                     </Link>
 
                     <div className="flex items-center gap-2">
@@ -74,12 +74,12 @@ export default function PostShow({ post }) {
                             {post.is_published ? (
                                 <>
                                     <Clock className="w-3.5 h-3.5" />
-                                    <span>Jadikan Draf</span>
+                                    <span>Set as Draft</span>
                                 </>
                             ) : (
                                 <>
                                     <CheckCircle2 className="w-3.5 h-3.5" />
-                                    <span>Publikasikan</span>
+                                    <span>Publish</span>
                                 </>
                             )}
                         </button>
@@ -89,7 +89,7 @@ export default function PostShow({ post }) {
                             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 transition"
                         >
                             <Trash2 className="w-3.5 h-3.5" />
-                            <span>Hapus</span>
+                            <span>Delete</span>
                         </button>
                     </div>
                 </div>
@@ -106,7 +106,7 @@ export default function PostShow({ post }) {
                                 ? 'bg-emerald-100 text-emerald-800' 
                                 : 'bg-slate-100 text-slate-600'
                         }`}>
-                            {post.is_published ? 'Terpublikasi' : 'Draf Pribadi'}
+                            {post.is_published ? 'Published' : 'Draft'}
                         </span>
                     </div>
 
@@ -121,9 +121,9 @@ export default function PostShow({ post }) {
                     )}
 
                     <div className="mt-4 pt-4 border-t border-slate-100 flex items-center gap-4 text-xs text-slate-400">
-                        <span>Dibuat: {new Date(post.created_at).toLocaleDateString('id-ID')}</span>
+                        <span>Created: {new Date(post.created_at).toLocaleDateString('en-US')}</span>
                         {post.published_at && (
-                            <span>Dipublikasikan: {new Date(post.published_at).toLocaleDateString('id-ID')}</span>
+                            <span>Published: {new Date(post.published_at).toLocaleDateString('en-US')}</span>
                         )}
                         <span>Slug: /{post.slug}</span>
                     </div>
@@ -136,12 +136,12 @@ export default function PostShow({ post }) {
                                     <img src={post.cover_image_path} alt={post.title} className="w-full h-full object-cover" />
                                 </div>
                                 <div className="flex items-center justify-between text-xs">
-                                    <span className="text-slate-500 font-medium">Foto sampul aktif</span>
+                                    <span className="text-slate-500 font-medium">Active cover image</span>
                                     <button 
                                         onClick={handleDeleteCover} 
                                         className="text-rose-600 hover:text-rose-800 font-semibold"
                                     >
-                                        Hapus Foto Sampul
+                                        Remove Cover Image
                                     </button>
                                 </div>
                             </div>
@@ -149,11 +149,11 @@ export default function PostShow({ post }) {
                             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
                                 <div className="flex items-center gap-2">
                                     <Image className="w-4 h-4 text-slate-400" />
-                                    <span>Artikel ini belum memiliki foto sampul.</span>
+                                    <span>This article does not have a cover image yet.</span>
                                 </div>
                                 <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold cursor-pointer">
                                     <Upload className="w-3.5 h-3.5 text-indigo-600" />
-                                    <span>Unggah Sampul</span>
+                                    <span>Upload Cover</span>
                                     <input 
                                         type="file" 
                                         accept="image/*" 

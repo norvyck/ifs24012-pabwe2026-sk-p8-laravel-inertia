@@ -25,11 +25,11 @@ class EnsurePostOwnership
         $post = $postParam instanceof Post ? $postParam : Post::find($postParam);
 
         if (! $post) {
-            abort(404, 'Postingan tidak ditemukan.');
+            abort(404, 'Article not found.');
         }
 
         if ($user->role !== 'admin' && (int) $post->user_id !== (int) $user->id) {
-            abort(403, 'Anda tidak memiliki hak untuk mengelola artikel ini.');
+            abort(403, 'You do not have permission to manage this article.');
         }
 
         return $next($request);

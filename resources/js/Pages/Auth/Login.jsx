@@ -16,8 +16,8 @@ export default function Login() {
     };
 
     return (
-        <AppLayout title="Masuk">
-            <Head title="Masuk ke BlogVerse Pro" />
+        <AppLayout title="Sign In">
+            <Head title="Sign In - BlogVerse Pro" />
 
             <div className="min-h-[75vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
@@ -26,15 +26,15 @@ export default function Login() {
                         <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white mx-auto mb-3 shadow-sm">
                             <LogIn className="w-6 h-6" />
                         </div>
-                        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Selamat Datang Kembali</h2>
-                        <p className="text-sm text-slate-500 mt-1">Masuk untuk mengelola tulisan dan artikel blog Anda</p>
+                        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Welcome Back</h2>
+                        <p className="text-sm text-slate-500 mt-1">Sign in to manage and write your blog articles</p>
                     </div>
 
                     {/* Form */}
                     <form onSubmit={submit} className="p-8 space-y-5">
                         <div>
                             <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="login-username">
-                                Username atau Email
+                                Username or Email
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -45,7 +45,7 @@ export default function Login() {
                                     type="text"
                                     value={data.username}
                                     onChange={(e) => setData('username', e.target.value)}
-                                    placeholder="Masukkan username atau email"
+                                    placeholder="Enter username or email"
                                     required
                                     autoComplete="username"
                                     className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition"
@@ -58,7 +58,7 @@ export default function Login() {
 
                         <div>
                             <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="login-password">
-                                Kata Sandi
+                                Password
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -69,7 +69,7 @@ export default function Login() {
                                     type="password"
                                     value={data.password}
                                     onChange={(e) => setData('password', e.target.value)}
-                                    placeholder="Masukkan kata sandi"
+                                    placeholder="Enter your password"
                                     required
                                     autoComplete="current-password"
                                     className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition"
@@ -88,7 +88,7 @@ export default function Login() {
                                     onChange={(e) => setData('remember', e.target.checked)}
                                     className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4"
                                 />
-                                <span className="ml-2">Ingat saya</span>
+                                <span className="ml-2">Remember me</span>
                             </label>
                         </div>
 
@@ -101,24 +101,24 @@ export default function Login() {
                             {processing ? (
                                 <>
                                     <Loader2 className="w-4 h-4 animate-spin" />
-                                    <span>Memproses...</span>
+                                    <span>Signing in...</span>
                                 </>
                             ) : (
-                                <span>Masuk Sekarang</span>
+                                <span>Sign In</span>
                             )}
                         </button>
 
                         <div className="pt-4 border-t border-slate-100 text-center text-sm text-slate-600">
-                            Belum punya akun?{' '}
+                            Don't have an account?{' '}
                             <Link href="/register" className="font-semibold text-indigo-600 hover:text-indigo-700">
-                                Daftar sebagai Penulis
+                                Join as Writer
                             </Link>
                         </div>
 
                         <div className="text-center">
                             <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-800 transition">
                                 <ArrowLeft className="w-3.5 h-3.5" />
-                                <span>Kembali ke Beranda Publik</span>
+                                <span>Back to Home</span>
                             </Link>
                         </div>
                     </form>

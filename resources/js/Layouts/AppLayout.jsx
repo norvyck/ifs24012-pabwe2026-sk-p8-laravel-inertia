@@ -59,7 +59,7 @@ export default function AppLayout({ children, title }) {
             {isProcessing && (
                 <div className="fixed top-18 right-6 z-50 flex items-center gap-2.5 px-4 py-2 bg-indigo-900/90 text-white rounded-full shadow-lg backdrop-blur text-sm font-medium animate-bounce">
                     <Loader2 className="w-4 h-4 animate-spin text-indigo-300" />
-                    <span>Memproses tindakan...</span>
+                    <span>Processing...</span>
                 </div>
             )}
 
@@ -83,13 +83,13 @@ export default function AppLayout({ children, title }) {
                                     href="/" 
                                     className="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-100 transition"
                                 >
-                                    Beranda
+                                    Home
                                 </Link>
                                 <Link 
                                     href="/articles" 
                                     className="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-100 transition"
                                 >
-                                    Katalog Artikel
+                                    Articles
                                 </Link>
                                 {user && (
                                     <Link 
@@ -97,7 +97,7 @@ export default function AppLayout({ children, title }) {
                                         className="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-100 transition flex items-center gap-1.5"
                                     >
                                         <FileText className="w-4 h-4" />
-                                        Dashboard Saya
+                                        My Dashboard
                                     </Link>
                                 )}
                                 {user?.role === 'admin' && (
@@ -107,14 +107,14 @@ export default function AppLayout({ children, title }) {
                                             className="px-3 py-2 rounded-lg text-sm font-medium text-amber-700 hover:bg-amber-50 transition flex items-center gap-1.5"
                                         >
                                             <Shield className="w-4 h-4" />
-                                            Monitoring Artikel
+                                            All Posts
                                         </Link>
                                         <Link 
                                             href="/admin/users" 
                                             className="px-3 py-2 rounded-lg text-sm font-medium text-amber-700 hover:bg-amber-50 transition flex items-center gap-1.5"
                                         >
                                             <Users className="w-4 h-4" />
-                                            Kelola Pengguna
+                                            Manage Users
                                         </Link>
                                     </>
                                 )}
@@ -144,7 +144,7 @@ export default function AppLayout({ children, title }) {
                                     <button
                                         onClick={handleLogout}
                                         className="p-2 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
-                                        title="Keluar (Logout)"
+                                        title="Logout"
                                     >
                                         <LogOut className="w-5 h-5" />
                                     </button>
@@ -156,14 +156,14 @@ export default function AppLayout({ children, title }) {
                                         className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:text-indigo-600 hover:bg-slate-100 transition"
                                     >
                                         <LogIn className="w-4 h-4" />
-                                        <span>Masuk</span>
+                                        <span>Sign In</span>
                                     </Link>
                                     <Link
                                         href="/register"
                                         className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm transition"
                                     >
                                         <UserPlus className="w-4 h-4" />
-                                        <span>Daftar Penulis</span>
+                                        <span>Register</span>
                                     </Link>
                                 </div>
                             )}
@@ -215,40 +215,39 @@ export default function AppLayout({ children, title }) {
                                 <span className="text-lg font-bold text-white tracking-tight">BlogVerse Pro</span>
                             </div>
                             <p className="text-sm text-slate-400 max-w-sm leading-relaxed">
-                                Platform publikasi artikel modern multi-tier dengan Clean Architecture, didukung integrasi OpenAI, TOAST UI Editor, dan ekspor spreadsheet.
+                                A modern publishing platform designed for writers and readers to share insightful stories and ideas.
                             </p>
                         </div>
                         <div>
-                            <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-200 mb-3">Navigasi Utama</h4>
+                            <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-200 mb-3">Navigation</h4>
                             <ul className="space-y-2 text-sm">
                                 <li>
-                                    <Link href="/" className="hover:text-white transition">Beranda Publik</Link>
+                                    <Link href="/" className="hover:text-white transition">Home</Link>
                                 </li>
                                 <li>
-                                    <Link href="/articles" className="hover:text-white transition">Katalog Artikel</Link>
+                                    <Link href="/articles" className="hover:text-white transition">Articles</Link>
                                 </li>
                             </ul>
                         </div>
                         <div>
-                            <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-200 mb-3">Akun & Penulis</h4>
+                            <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-200 mb-3">Account</h4>
                             <ul className="space-y-2 text-sm">
                                 <li>
-                                    <Link href="/login" className="hover:text-white transition">Halaman Login (Masuk)</Link>
+                                    <Link href="/login" className="hover:text-white transition">Sign In</Link>
                                 </li>
                                 <li>
-                                    <Link href="/register" className="hover:text-white transition">Halaman Register (Daftar Penulis)</Link>
+                                    <Link href="/register" className="hover:text-white transition">Register</Link>
                                 </li>
                                 {user && (
                                     <li>
-                                        <Link href="/dashboard/posts" className="hover:text-white transition">Dashboard Artikel Pribadi</Link>
+                                        <Link href="/dashboard/posts" className="hover:text-white transition">My Dashboard</Link>
                                     </li>
                                 )}
                             </ul>
                         </div>
                     </div>
                     <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-                        <p>© 2026 BlogVerse Pro. Praktikum Pemrograman Web (PABWE).</p>
-                        <p>Laravel 13 &bull; Inertia.js &bull; React &bull; PostgreSQL</p>
+                        <p>© 2026 BlogVerse Pro. All rights reserved.</p>
                     </div>
                 </div>
             </footer>

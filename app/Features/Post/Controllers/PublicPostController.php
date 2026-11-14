@@ -44,7 +44,7 @@ class PublicPostController extends Controller
         $post = $this->postRepository->findPublishedBySlug($slug);
 
         if (! $post) {
-            abort(404, 'Artikel tidak ditemukan atau belum dipublikasikan.');
+            abort(404, 'Article not found or not published.');
         }
 
         return Inertia::render('Public/PostShow', [

@@ -6,7 +6,7 @@ import { Calendar, User, ArrowLeft, LogIn, UserPlus, Sparkles, Share2 } from 'lu
 
 export default function PostShow({ post }) {
     const formattedDate = post.published_at 
-        ? new Date(post.published_at).toLocaleDateString('id-ID', {
+        ? new Date(post.published_at).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
@@ -25,7 +25,7 @@ export default function PostShow({ post }) {
                         className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition"
                     >
                         <ArrowLeft className="w-4 h-4" />
-                        <span>Kembali ke Katalog Artikel</span>
+                        <span>Back to Articles</span>
                     </Link>
                 </div>
 
@@ -61,7 +61,7 @@ export default function PostShow({ post }) {
 
                         <div className="flex items-center gap-2 text-xs text-slate-500">
                             <Calendar className="w-4 h-4 text-slate-400" />
-                            <span>Dipublikasikan pada {formattedDate}</span>
+                            <span>Published on {formattedDate}</span>
                         </div>
                     </div>
                 </header>
@@ -89,13 +89,13 @@ export default function PostShow({ post }) {
                     <div className="relative z-10 max-w-2xl">
                         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-indigo-200 text-xs font-semibold mb-4 backdrop-blur">
                             <Sparkles className="w-3.5 h-3.5" />
-                            Komunitas Penulis BlogVerse
+                            BlogVerse Community
                         </div>
                         <h3 className="text-2xl sm:text-3xl font-bold tracking-tight">
-                            Terinspirasi untuk Berbagi Pengetahuan Anda?
+                            Inspired to Share Your Ideas?
                         </h3>
                         <p className="mt-2 text-sm sm:text-base text-indigo-100 leading-relaxed">
-                            Bergabunglah bersama komunitas kreator kami. Tulis artikel berkualitas dengan editor Markdown interaktif dan bantuan asisten AI.
+                            Join our community of authors and thinkers. Write high-quality articles with our interactive Markdown editor and AI assistance.
                         </p>
 
                         <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -104,14 +104,14 @@ export default function PostShow({ post }) {
                                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-indigo-900 font-bold text-sm hover:bg-indigo-50 transition shadow-sm"
                             >
                                 <UserPlus className="w-4 h-4 text-indigo-600" />
-                                <span>Daftar Sebagai Penulis</span>
+                                <span>Join as Writer</span>
                             </Link>
                             <Link
                                 href="/login"
                                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-700/60 hover:bg-indigo-700 text-white border border-indigo-400/30 font-medium text-sm transition"
                             >
                                 <LogIn className="w-4 h-4" />
-                                <span>Masuk ke Akun Anda</span>
+                                <span>Sign In to Your Account</span>
                             </Link>
                         </div>
                     </div>

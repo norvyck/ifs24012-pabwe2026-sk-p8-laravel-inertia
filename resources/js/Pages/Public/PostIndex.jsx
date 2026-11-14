@@ -24,21 +24,21 @@ export default function PostIndex({ posts, filters, categories }) {
     };
 
     return (
-        <AppLayout title="Beranda Publik">
-            <Head title="Katalog Artikel Publik - BlogVerse Pro" />
+        <AppLayout title="Articles">
+            <Head title="Explore Articles - BlogVerse Pro" />
 
             {/* Hero Banner Beranda with CTAs (PDF Requirement Section 3.6 Item 1) */}
             <div className="bg-gradient-to-b from-indigo-50/60 via-white to-slate-50 border-b border-slate-200">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs font-semibold uppercase tracking-wider mb-6">
                         <Sparkles className="w-3.5 h-3.5" />
-                        Ruang Publikasi Multi-Tier
+                        Modern Publishing Platform
                     </div>
                     <h1 className="text-4xl sm:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight sm:leading-none">
-                        Gagasan Hebat, <span className="text-indigo-600">Dituangkan Leluasa.</span>
+                        Great Ideas, <span className="text-indigo-600">Thoughtfully Told.</span>
                     </h1>
                     <p className="mt-5 text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                        Jelajahi tulisan pilihan dari para kreator atau mulai buat portofolio tulisan Anda sendiri dengan kemudahan format Markdown dan asisten AI.
+                        Discover stories, insights, and perspectives from authors worldwide, or share your own thoughts with the community.
                     </p>
 
                     {/* CTA Buttons to Login and Register */}
@@ -48,14 +48,14 @@ export default function PostIndex({ posts, filters, categories }) {
                             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white border border-slate-300 text-slate-800 font-semibold text-sm hover:border-indigo-600 hover:text-indigo-600 transition shadow-sm"
                         >
                             <LogIn className="w-4 h-4 text-slate-500" />
-                            <span>Masuk ke Akun</span>
+                            <span>Sign In</span>
                         </Link>
                         <Link
                             href="/register"
                             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 text-white font-semibold text-sm hover:bg-indigo-700 transition shadow-md shadow-indigo-200"
                         >
                             <UserPlus className="w-4 h-4" />
-                            <span>Daftar Sebagai Penulis</span>
+                            <span>Join as Writer</span>
                         </Link>
                     </div>
                 </div>
@@ -74,14 +74,14 @@ export default function PostIndex({ posts, filters, categories }) {
                             type="text"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            placeholder="Cari judul atau topik artikel..."
+                            placeholder="Search articles by title or keyword..."
                             className="w-full pl-10 pr-24 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white shadow-sm"
                         />
                         <button
                             type="submit"
                             className="absolute right-1.5 top-1.5 bottom-1.5 px-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium transition"
                         >
-                            Cari
+                            Search
                         </button>
                     </form>
 
@@ -96,7 +96,7 @@ export default function PostIndex({ posts, filters, categories }) {
                                     : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'
                             }`}
                         >
-                            Semua Kategori
+                            All Categories
                         </button>
                         {categories.map((cat) => (
                             <button
@@ -107,7 +107,7 @@ export default function PostIndex({ posts, filters, categories }) {
                                     activeCategory === cat
                                         ? 'bg-indigo-600 text-white shadow-sm'
                                         : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'
-                                }`}
+                                    }`}
                             >
                                 {cat}
                             </button>
@@ -152,7 +152,7 @@ export default function PostIndex({ posts, filters, categories }) {
                                             </Link>
                                         </h2>
                                         <p className="mt-2 text-sm text-slate-600 line-clamp-3 leading-relaxed">
-                                            {post.excerpt || 'Baca tulisan lengkapnya untuk mengetahui detail ulasan.'}
+                                            {post.excerpt || 'Read the full article to explore insights and details.'}
                                         </p>
                                     </div>
 
@@ -167,7 +167,7 @@ export default function PostIndex({ posts, filters, categories }) {
                                             href={`/articles/${post.slug}`}
                                             className="inline-flex items-center gap-1 font-semibold text-indigo-600 hover:text-indigo-700 group-hover:translate-x-1 transition"
                                         >
-                                            <span>Baca</span>
+                                            <span>Read</span>
                                             <ArrowRight className="w-3.5 h-3.5" />
                                         </Link>
                                     </div>
@@ -178,8 +178,8 @@ export default function PostIndex({ posts, filters, categories }) {
                 ) : (
                     <div className="bg-white rounded-2xl border border-dashed border-slate-300 p-12 text-center">
                         <BookOpen className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-                        <h3 className="text-lg font-bold text-slate-800">Belum Ada Artikel yang Ditemukan</h3>
-                        <p className="text-sm text-slate-500 mt-1">Coba sesuaikan kata kunci pencarian atau pilih kategori lain.</p>
+                        <h3 className="text-lg font-bold text-slate-800">No Articles Found</h3>
+                        <p className="text-sm text-slate-500 mt-1">Try adjusting your search keywords or filter by another category.</p>
                     </div>
                 )}
 

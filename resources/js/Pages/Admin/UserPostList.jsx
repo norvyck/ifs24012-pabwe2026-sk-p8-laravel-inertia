@@ -22,8 +22,8 @@ export default function UserPostList({ targetUser, posts, stats, filters }) {
     };
 
     return (
-        <AppLayout title={`Artikel User: ${targetUser.name}`}>
-            <Head title={`Monitoring Artikel ${targetUser.name} - Panel Admin`} />
+        <AppLayout title={`User Articles: ${targetUser.name}`}>
+            <Head title={`Articles by ${targetUser.name} - Admin Panel`} />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Back button */}
@@ -33,7 +33,7 @@ export default function UserPostList({ targetUser, posts, stats, filters }) {
                         className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-slate-900 transition"
                     >
                         <ArrowLeft className="w-4 h-4" />
-                        <span>Kembali ke Daftar Pengguna</span>
+                        <span>Back to Users List</span>
                     </Link>
                 </div>
 
@@ -42,10 +42,10 @@ export default function UserPostList({ targetUser, posts, stats, filters }) {
                     <div>
                         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold uppercase tracking-wider mb-2">
                             <Shield className="w-3.5 h-3.5" />
-                            Monitoring Penulis (Read-Only)
+                            Author Monitoring (Read-Only)
                         </div>
                         <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                            Artikel Milik: {targetUser.name}
+                            Articles by: {targetUser.name}
                         </h1>
                         <p className="text-sm text-slate-500 mt-1">
                             @{targetUser.username} &bull; {targetUser.email}
@@ -55,25 +55,25 @@ export default function UserPostList({ targetUser, posts, stats, filters }) {
                     <a
                         href={`/admin/users/${targetUser.id}/posts/export`}
                         className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm transition shadow-sm"
-                        title="Unduh seluruh artikel milik user ini ke Excel"
+                        title="Download articles written by this user to Excel"
                     >
                         <FileSpreadsheet className="w-4 h-4" />
-                        <span>Ekspor Artikel User Ini ke Excel</span>
+                        <span>Export User's Articles to Excel</span>
                     </a>
                 </div>
 
                 {/* Stats */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
                     <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
-                        <p className="text-xs font-semibold uppercase text-slate-500">Total Tulisan</p>
+                        <p className="text-xs font-semibold uppercase text-slate-500">Total Articles</p>
                         <h3 className="text-2xl font-bold text-slate-900 mt-1">{stats?.total || 0}</h3>
                     </div>
                     <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
-                        <p className="text-xs font-semibold uppercase text-emerald-600">Terpublikasi</p>
+                        <p className="text-xs font-semibold uppercase text-emerald-600">Published</p>
                         <h3 className="text-2xl font-bold text-slate-900 mt-1">{stats?.published || 0}</h3>
                     </div>
                     <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
-                        <p className="text-xs font-semibold uppercase text-amber-600">Draf</p>
+                        <p className="text-xs font-semibold uppercase text-amber-600">Drafts</p>
                         <h3 className="text-2xl font-bold text-slate-900 mt-1">{stats?.draft || 0}</h3>
                     </div>
                 </div>
@@ -88,14 +88,14 @@ export default function UserPostList({ targetUser, posts, stats, filters }) {
                             type="text"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            placeholder="Cari artikel user ini..."
+                            placeholder="Search articles..."
                             className="w-full pl-10 pr-24 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-amber-500 bg-white shadow-sm"
                         />
                         <button
                             type="submit"
                             className="absolute right-1 top-1 bottom-1 px-3 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold transition"
                         >
-                            Cari
+                            Search
                         </button>
                     </form>
                 </div>
@@ -106,11 +106,11 @@ export default function UserPostList({ targetUser, posts, stats, filters }) {
                         <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
                             <thead className="bg-slate-50 text-slate-600 font-semibold text-xs uppercase tracking-wider">
                                 <tr>
-                                    <th scope="col" className="px-6 py-4">Judul</th>
-                                    <th scope="col" className="px-6 py-4">Kategori</th>
+                                    <th scope="col" className="px-6 py-4">Title</th>
+                                    <th scope="col" className="px-6 py-4">Category</th>
                                     <th scope="col" className="px-6 py-4">Status</th>
-                                    <th scope="col" className="px-6 py-4">Dibuat</th>
-                                    <th scope="col" className="px-6 py-4 text-right">Lihat</th>
+                                    <th scope="col" className="px-6 py-4">Date</th>
+                                    <th scope="col" className="px-6 py-4 text-right">Action</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-200">
@@ -131,11 +131,11 @@ export default function UserPostList({ targetUser, posts, stats, filters }) {
                                                         ? 'bg-emerald-50 text-emerald-700' 
                                                         : 'bg-slate-100 text-slate-600'
                                                 }`}>
-                                                    {post.is_published ? 'Publik' : 'Draf'}
+                                                    {post.is_published ? 'Published' : 'Draft'}
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-xs text-slate-500">
-                                                {new Date(post.created_at).toLocaleDateString('id-ID')}
+                                                {new Date(post.created_at).toLocaleDateString('en-US')}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right">
                                                 {post.is_published ? (
@@ -144,10 +144,10 @@ export default function UserPostList({ targetUser, posts, stats, filters }) {
                                                         className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-600 hover:text-indigo-800"
                                                     >
                                                         <Eye className="w-3.5 h-3.5" />
-                                                        <span>Buka Publik</span>
+                                                        <span>View</span>
                                                     </Link>
                                                 ) : (
-                                                    <span className="text-xs text-slate-400 italic">Draf (Private)</span>
+                                                    <span className="text-xs text-slate-400 italic">Draft (Private)</span>
                                                 )}
                                             </td>
                                         </tr>
@@ -156,7 +156,7 @@ export default function UserPostList({ targetUser, posts, stats, filters }) {
                                     <tr>
                                         <td colSpan="5" className="px-6 py-12 text-center text-slate-500">
                                             <FileText className="w-10 h-10 text-slate-300 mx-auto mb-2" />
-                                            <p className="font-medium text-slate-700">User ini belum memiliki artikel</p>
+                                            <p className="font-medium text-slate-700">This user has not created any articles yet</p>
                                         </td>
                                     </tr>
                                 )}
