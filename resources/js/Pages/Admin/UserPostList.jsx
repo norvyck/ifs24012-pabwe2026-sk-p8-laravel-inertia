@@ -54,7 +54,7 @@ export default function UserPostList({ targetUser, posts, stats, filters }) {
 
                     <a
                         href={`/admin/users/${targetUser.id}/posts/export`}
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-sm transition shadow-sm"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-medium text-sm transition shadow-sm"
                         title="Download articles written by this user to Excel"
                     >
                         <FileSpreadsheet className="w-4 h-4" />
@@ -97,7 +97,7 @@ export default function UserPostList({ targetUser, posts, stats, filters }) {
                         />
                         <button
                             type="submit"
-                            className="absolute right-1 top-1 bottom-1 px-3 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold transition"
+                            className="absolute right-1 top-1 bottom-1 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition"
                         >
                             Search
                         </button>

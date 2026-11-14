@@ -51,7 +51,7 @@ export default function UserList({ users, filters }) {
                         />
                         <button
                             type="submit"
-                            className="absolute right-1 top-1 bottom-1 px-3 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold transition"
+                            className="absolute right-1 top-1 bottom-1 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition"
                         >
                             Search
                         </button>
@@ -149,7 +149,7 @@ export default function UserList({ users, filters }) {
                                             dangerouslySetInnerHTML={{ __html: link.label }}
                                             className={`px-3 py-1 rounded-lg text-xs transition ${
                                                 link.active
-                                                    ? 'bg-amber-600 text-white font-bold'
+                                                    ? 'bg-amber-500 text-slate-950 font-bold'
                                                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                                             }`}
                                         />

@@ -355,7 +355,6 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                                             : 'bg-slate-800 text-slate-400 hover:bg-slate-750 border border-slate-700'
                                                     }`}
                                                     title="Click to toggle publish status"
-                                                    aria-label={`Toggle publish status for ${post.title}`}
                                                 >
                                                     {post.is_published ? (
                                                         <>
@@ -740,7 +739,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                     <button
                                         type="button"
                                         onClick={handleSaveAiBatch}
-                                        className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition shadow-sm"
+                                        className="w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-sm transition shadow-sm"
                                     >
                                         Save All to My Drafts
                                     </button>
