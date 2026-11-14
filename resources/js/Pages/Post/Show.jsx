@@ -148,16 +148,19 @@ export default function PostShow({ post }) {
                         ) : (
                             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
                                 <div className="flex items-center gap-2">
-                                    <Image className="w-4 h-4 text-slate-500" />
+                                    <Image className="w-4 h-4 text-slate-400" />
                                     <span>This article does not have a cover image yet.</span>
                                 </div>
-                                <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-slate-200 font-semibold cursor-pointer">
+                                <label htmlFor="post-cover-upload" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-slate-200 font-semibold cursor-pointer">
                                     <Upload className="w-3.5 h-3.5 text-indigo-400" />
                                     <span>Upload Cover</span>
                                     <input 
+                                        id="post-cover-upload"
+                                        name="cover_image"
                                         type="file" 
                                         accept="image/*" 
                                         onChange={handleCoverUpload} 
+                                        aria-label="Upload Cover Image"
                                         className="hidden" 
                                     />
                                 </label>

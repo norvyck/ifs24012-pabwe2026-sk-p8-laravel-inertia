@@ -149,6 +149,7 @@ export default function AppLayout({ children, title }) {
                                         onClick={handleLogout}
                                         className="p-2 text-slate-400 hover:text-rose-400 hover:bg-rose-950/40 rounded-lg transition"
                                         title="Logout"
+                                        aria-label="Logout"
                                     >
                                         <LogOut className="w-5 h-5" />
                                     </button>
@@ -195,6 +196,7 @@ export default function AppLayout({ children, title }) {
                         <button 
                             onClick={() => setAlertMessage(null)} 
                             className="p-1 rounded-md hover:bg-white/10 transition"
+                            aria-label="Dismiss notification"
                         >
                             <X className="w-4 h-4" />
                         </button>
@@ -223,7 +225,7 @@ export default function AppLayout({ children, title }) {
                             </p>
                         </div>
                         <div>
-                            <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-200 mb-3">Navigation</h4>
+                            <p className="text-sm font-semibold uppercase tracking-wider text-slate-200 mb-3">Navigation</p>
                             <ul className="space-y-2 text-sm">
                                 <li>
                                     <Link href="/" className="hover:text-white transition">Home</Link>
@@ -234,7 +236,7 @@ export default function AppLayout({ children, title }) {
                             </ul>
                         </div>
                         <div>
-                            <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-200 mb-3">Account</h4>
+                            <p className="text-sm font-semibold uppercase tracking-wider text-slate-200 mb-3">Account</p>
                             <ul className="space-y-2 text-sm">
                                 <li>
                                     <Link href="/login" className="hover:text-white transition">Sign In</Link>
@@ -250,7 +252,7 @@ export default function AppLayout({ children, title }) {
                             </ul>
                         </div>
                     </div>
-                    <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+                    <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
                         <p>© 2026 BlogVerse Pro. All rights reserved.</p>
                     </div>
                 </div>

@@ -26,7 +26,7 @@ export default function Login() {
                         <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white mx-auto mb-3 shadow-md shadow-indigo-950">
                             <LogIn className="w-6 h-6" />
                         </div>
-                        <h2 className="text-2xl font-bold text-white tracking-tight">Welcome Back</h2>
+                        <h1 className="text-2xl font-bold text-white tracking-tight">Welcome Back</h1>
                         <p className="text-sm text-slate-400 mt-1">Sign in to manage and write your blog articles</p>
                     </div>
 
@@ -37,18 +37,20 @@ export default function Login() {
                                 Username or Email
                             </label>
                             <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                                     <User className="w-4 h-4" />
                                 </div>
                                 <input
                                     id="login-username"
+                                    name="username"
                                     type="text"
                                     value={data.username}
                                     onChange={(e) => setData('username', e.target.value)}
                                     placeholder="Enter username or email"
                                     required
                                     autoComplete="username"
-                                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition"
+                                    aria-label="Username or Email"
+                                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition"
                                 />
                             </div>
                             {errors.username && (
@@ -61,18 +63,20 @@ export default function Login() {
                                 Password
                             </label>
                             <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                                     <KeyRound className="w-4 h-4" />
                                 </div>
                                 <input
                                     id="login-password"
+                                    name="password"
                                     type="password"
                                     value={data.password}
                                     onChange={(e) => setData('password', e.target.value)}
                                     placeholder="Enter your password"
                                     required
                                     autoComplete="current-password"
-                                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition"
+                                    aria-label="Password"
+                                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition"
                                 />
                             </div>
                             {errors.password && (
@@ -81,11 +85,14 @@ export default function Login() {
                         </div>
 
                         <div className="flex items-center justify-between">
-                            <label className="flex items-center text-sm text-slate-400 cursor-pointer">
+                            <label htmlFor="login-remember" className="flex items-center text-sm text-slate-400 cursor-pointer">
                                 <input
+                                    id="login-remember"
+                                    name="remember"
                                     type="checkbox"
                                     checked={data.remember}
                                     onChange={(e) => setData('remember', e.target.checked)}
+                                    aria-label="Remember me"
                                     className="rounded border-slate-700 bg-slate-950 text-indigo-600 focus:ring-indigo-500 w-4 h-4"
                                 />
                                 <span className="ml-2">Remember me</span>
@@ -116,7 +123,7 @@ export default function Login() {
                         </div>
 
                         <div className="text-center">
-                            <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition">
+                            <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 transition font-medium">
                                 <ArrowLeft className="w-3.5 h-3.5" />
                                 <span>Back to Home</span>
                             </Link>

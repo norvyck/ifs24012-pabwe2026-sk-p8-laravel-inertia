@@ -66,30 +66,34 @@ export default function UserPostList({ targetUser, posts, stats, filters }) {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
                     <div className="bg-slate-900 rounded-2xl border border-slate-800 p-5 shadow-lg">
                         <p className="text-xs font-semibold uppercase text-slate-400">Total Articles</p>
-                        <h3 className="text-2xl font-bold text-white mt-1">{stats?.total || 0}</h3>
+                        <p className="text-2xl font-bold text-white mt-1">{stats?.total || 0}</p>
                     </div>
                     <div className="bg-slate-900 rounded-2xl border border-slate-800 p-5 shadow-lg">
                         <p className="text-xs font-semibold uppercase text-emerald-400">Published</p>
-                        <h3 className="text-2xl font-bold text-white mt-1">{stats?.published || 0}</h3>
+                        <p className="text-2xl font-bold text-white mt-1">{stats?.published || 0}</p>
                     </div>
                     <div className="bg-slate-900 rounded-2xl border border-slate-800 p-5 shadow-lg">
                         <p className="text-xs font-semibold uppercase text-amber-400">Drafts</p>
-                        <h3 className="text-2xl font-bold text-white mt-1">{stats?.draft || 0}</h3>
+                        <p className="text-2xl font-bold text-white mt-1">{stats?.draft || 0}</p>
                     </div>
                 </div>
 
                 {/* Search */}
                 <div className="mb-6">
                     <form onSubmit={handleSearch} className="max-w-md relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                        <label htmlFor="admin-search-user-posts" className="sr-only">Search user articles</label>
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                             <Search className="w-4 h-4" />
                         </div>
                         <input
+                            id="admin-search-user-posts"
+                            name="search"
                             type="text"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             placeholder="Search articles..."
-                            className="w-full pl-10 pr-24 py-2 rounded-xl border border-slate-800 text-sm focus:ring-2 focus:ring-amber-500 bg-slate-900 text-slate-100 placeholder:text-slate-500 shadow-sm"
+                            aria-label="Search user articles"
+                            className="w-full pl-10 pr-24 py-2 rounded-xl border border-slate-800 text-sm focus:ring-2 focus:ring-amber-500 bg-slate-900 text-slate-100 placeholder:text-slate-400 shadow-sm"
                         />
                         <button
                             type="submit"
@@ -147,7 +151,7 @@ export default function UserPostList({ targetUser, posts, stats, filters }) {
                                                         <span>View</span>
                                                     </Link>
                                                 ) : (
-                                                    <span className="text-xs text-slate-500 italic">Draft (Private)</span>
+                                                    <span className="text-xs text-slate-400 italic">Draft (Private)</span>
                                                 )}
                                             </td>
                                         </tr>

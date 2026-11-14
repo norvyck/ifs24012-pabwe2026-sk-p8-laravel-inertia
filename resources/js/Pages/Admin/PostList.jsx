@@ -50,15 +50,19 @@ export default function PostList({ posts, filters }) {
                 {/* Search */}
                 <div className="mb-6">
                     <form onSubmit={handleSearch} className="max-w-md relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                        <label htmlFor="admin-search-posts" className="sr-only">Search articles</label>
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                             <Search className="w-4 h-4" />
                         </div>
                         <input
+                            id="admin-search-posts"
+                            name="search"
                             type="text"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             placeholder="Search by title, author, category..."
-                            className="w-full pl-10 pr-24 py-2 rounded-xl border border-slate-800 text-sm focus:ring-2 focus:ring-amber-500 bg-slate-900 text-slate-100 placeholder:text-slate-500 shadow-sm"
+                            aria-label="Search by title, author, category"
+                            className="w-full pl-10 pr-24 py-2 rounded-xl border border-slate-800 text-sm focus:ring-2 focus:ring-amber-500 bg-slate-900 text-slate-100 placeholder:text-slate-400 shadow-sm"
                         />
                         <button
                             type="submit"
@@ -92,7 +96,7 @@ export default function PostList({ posts, filters }) {
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="font-medium text-slate-200">{post.user?.name}</div>
-                                                <div className="text-xs text-slate-500">@{post.user?.username}</div>
+                                                <div className="text-xs text-slate-400">@{post.user?.username}</div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-950/80 text-indigo-300 border border-indigo-800/60">
@@ -121,7 +125,7 @@ export default function PostList({ posts, filters }) {
                                                         <span>View</span>
                                                     </Link>
                                                 ) : (
-                                                    <span className="text-xs text-slate-500 italic">Draft</span>
+                                                    <span className="text-xs text-slate-400 italic">Draft</span>
                                                 )}
                                             </td>
                                         </tr>
@@ -141,7 +145,7 @@ export default function PostList({ posts, filters }) {
                     {/* Pagination */}
                     {posts?.links?.length > 3 && (
                         <div className="px-6 py-4 border-t border-slate-800 flex items-center justify-between">
-                            <span className="text-xs text-slate-500">
+                            <span className="text-xs text-slate-400">
                                 Showing {posts.from || 0} - {posts.to || 0} of {posts.total} articles
                             </span>
                             <div className="flex items-center gap-1">

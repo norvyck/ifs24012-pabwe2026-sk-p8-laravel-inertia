@@ -64,7 +64,7 @@ export default function PostShow({ post }) {
                         </div>
 
                         <div className="flex items-center gap-2 text-xs text-slate-400">
-                            <Calendar className="w-4 h-4 text-slate-500" />
+                            <Calendar className="w-4 h-4 text-slate-400" />
                             <span>Published on {formattedDate}</span>
                         </div>
                     </div>
@@ -95,9 +95,9 @@ export default function PostShow({ post }) {
                             <Sparkles className="w-3.5 h-3.5" />
                             BlogVerse Community
                         </div>
-                        <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                             Inspired to Share Your Ideas?
-                        </h3>
+                        </h2>
                         <p className="mt-2 text-sm sm:text-base text-slate-300 leading-relaxed">
                             Join our community of authors and thinkers. Write high-quality articles with our interactive Markdown editor and AI assistance.
                         </p>

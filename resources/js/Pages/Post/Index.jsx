@@ -256,8 +256,8 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                     <div className="bg-slate-900 rounded-2xl border border-slate-800 p-5 shadow-lg flex items-center justify-between">
                         <div>
                             <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Posts</p>
-                            <h3 className="text-3xl font-extrabold text-white mt-1">{stats?.total || 0}</h3>
-                            <p className="text-xs text-slate-500 mt-1">All saved articles</p>
+                            <p className="text-3xl font-extrabold text-white mt-1">{stats?.total || 0}</p>
+                            <p className="text-xs text-slate-400 mt-1">All saved articles</p>
                         </div>
                         <div className="w-12 h-12 rounded-xl bg-indigo-950 border border-indigo-800 flex items-center justify-center text-indigo-400">
                             <Layers className="w-6 h-6" />
@@ -267,8 +267,8 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                     <div className="bg-slate-900 rounded-2xl border border-slate-800 p-5 shadow-lg flex items-center justify-between">
                         <div>
                             <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Total Published</p>
-                            <h3 className="text-3xl font-extrabold text-white mt-1">{stats?.published || 0}</h3>
-                            <p className="text-xs text-slate-500 mt-1">Live in public catalog (is_published = true)</p>
+                            <p className="text-3xl font-extrabold text-white mt-1">{stats?.published || 0}</p>
+                            <p className="text-xs text-slate-400 mt-1">Live in public catalog (is_published = true)</p>
                         </div>
                         <div className="w-12 h-12 rounded-xl bg-emerald-950 border border-emerald-800 flex items-center justify-center text-emerald-400">
                             <CheckCircle className="w-6 h-6" />
@@ -278,8 +278,8 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                     <div className="bg-slate-900 rounded-2xl border border-slate-800 p-5 shadow-lg flex items-center justify-between">
                         <div>
                             <p className="text-xs font-semibold uppercase tracking-wider text-amber-400">Drafts</p>
-                            <h3 className="text-3xl font-extrabold text-white mt-1">{stats?.draft || 0}</h3>
-                            <p className="text-xs text-slate-500 mt-1">Personal drafts (is_published = false)</p>
+                            <p className="text-3xl font-extrabold text-white mt-1">{stats?.draft || 0}</p>
+                            <p className="text-xs text-slate-400 mt-1">Personal drafts (is_published = false)</p>
                         </div>
                         <div className="w-12 h-12 rounded-xl bg-amber-950 border border-amber-800 flex items-center justify-center text-amber-400">
                             <Clock className="w-6 h-6" />
@@ -290,15 +290,19 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                 {/* Search Bar */}
                 <div className="mb-6">
                     <form onSubmit={handleSearch} className="max-w-md relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                        <label htmlFor="filter-posts" className="sr-only">Filter articles</label>
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                             <Search className="w-4 h-4" />
                         </div>
                         <input
+                            id="filter-posts"
+                            name="search"
                             type="text"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             placeholder="Filter by title or keywords..."
-                            className="w-full pl-10 pr-24 py-2 rounded-xl border border-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-slate-900 text-slate-100 placeholder:text-slate-500 shadow-sm"
+                            aria-label="Filter by title or keywords"
+                            className="w-full pl-10 pr-24 py-2 rounded-xl border border-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-slate-900 text-slate-100 placeholder:text-slate-400 shadow-sm"
                         />
                         <button
                             type="submit"
@@ -333,7 +337,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                                 >
                                                     {post.title}
                                                 </Link>
-                                                <div className="text-xs text-slate-500 font-normal mt-0.5">
+                                                <div className="text-xs text-slate-400 font-normal mt-0.5">
                                                     slug: /{post.slug}
                                                 </div>
                                             </td>
@@ -351,6 +355,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                                             : 'bg-slate-800 text-slate-400 hover:bg-slate-750 border border-slate-700'
                                                     }`}
                                                     title="Click to toggle publish status"
+                                                    aria-label={`Toggle publish status for ${post.title}`}
                                                 >
                                                     {post.is_published ? (
                                                         <>
@@ -359,7 +364,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                                         </>
                                                     ) : (
                                                         <>
-                                                            <ToggleLeft className="w-4 h-4 text-slate-500" />
+                                                            <ToggleLeft className="w-4 h-4 text-slate-400" />
                                                             <span>Draft</span>
                                                         </>
                                                     )}
@@ -374,6 +379,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                                     onClick={() => setOpenKebabId(openKebabId === post.id ? null : post.id)}
                                                     className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition"
                                                     title="Actions Menu"
+                                                    aria-label="Actions Menu"
                                                 >
                                                     <MoreVertical className="w-5 h-5" />
                                                 </button>
@@ -420,7 +426,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                         <td colSpan="5" className="px-6 py-12 text-center text-slate-400">
                                             <FileText className="w-10 h-10 text-slate-600 mx-auto mb-2" />
                                             <p className="font-medium text-slate-300">No articles in your dashboard yet</p>
-                                            <p className="text-xs text-slate-500 mt-1">Start writing a new article or create drafts with AI.</p>
+                                            <p className="text-xs text-slate-400 mt-1">Start writing a new article or create drafts with AI.</p>
                                         </td>
                                     </tr>
                                 )}
@@ -431,7 +437,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                     {/* Pagination */}
                     {posts?.links?.length > 3 && (
                         <div className="px-6 py-4 border-t border-slate-800 flex items-center justify-between">
-                            <span className="text-xs text-slate-500">
+                            <span className="text-xs text-slate-400">
                                 Showing {posts.from || 0} - {posts.to || 0} of {posts.total} articles
                             </span>
                             <div className="flex items-center gap-1">
@@ -476,6 +482,7 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                         <button
                             onClick={() => setIsAddModalOpen(false)}
                             className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition"
+                            aria-label="Close modal"
                         >
                             <X className="w-6 h-6" />
                         </button>
@@ -485,27 +492,33 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                     <div className="flex-1 overflow-y-auto p-6 sm:p-10 max-w-5xl mx-auto w-full space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div className="md:col-span-2 space-y-2">
-                                <label className="block text-sm font-semibold text-slate-300">
+                                <label htmlFor="create-post-title" className="block text-sm font-semibold text-slate-300">
                                     Article Title <span className="text-rose-400">*</span>
                                 </label>
                                 <input
+                                    id="create-post-title"
+                                    name="title"
                                     type="text"
                                     value={postData.title}
                                     onChange={(e) => setPostData('title', e.target.value)}
                                     placeholder="Enter article title..."
-                                    className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-900 text-slate-100 placeholder:text-slate-500 text-sm focus:ring-2 focus:ring-indigo-500 font-medium"
+                                    aria-label="Article Title"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-900 text-slate-100 placeholder:text-slate-400 text-sm focus:ring-2 focus:ring-indigo-500 font-medium"
                                     required
                                 />
-                                {postErrors.title && <p className="text-xs text-rose-400">{postErrors.title}</p>}
+                                {postErrors.title && <p className="text-xs text-rose-400 font-medium">{postErrors.title}</p>}
                             </div>
 
                             <div className="space-y-2">
-                                <label className="block text-sm font-semibold text-slate-300">
+                                <label htmlFor="create-post-category" className="block text-sm font-semibold text-slate-300">
                                     Category <span className="text-rose-400">*</span>
                                 </label>
                                 <select
+                                    id="create-post-category"
+                                    name="category"
                                     value={postData.category}
                                     onChange={(e) => setPostData('category', e.target.value)}
+                                    aria-label="Category"
                                     className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-900 text-slate-100 text-sm focus:ring-2 focus:ring-indigo-500"
                                 >
                                     {categories.map((c) => (
@@ -516,27 +529,33 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="block text-sm font-semibold text-slate-300">
+                            <label htmlFor="create-post-excerpt" className="block text-sm font-semibold text-slate-300">
                                 Excerpt / Teaser Summary (1-2 sentences)
                             </label>
                             <textarea
+                                id="create-post-excerpt"
+                                name="excerpt"
                                 value={postData.excerpt}
                                 onChange={(e) => setPostData('excerpt', e.target.value)}
                                 rows="2"
                                 placeholder="Write a brief teaser summary for readers..."
-                                className="w-full px-4 py-2 rounded-xl border border-slate-700 bg-slate-900 text-slate-100 placeholder:text-slate-500 text-sm focus:ring-2 focus:ring-indigo-500"
+                                aria-label="Excerpt / Teaser Summary"
+                                className="w-full px-4 py-2 rounded-xl border border-slate-700 bg-slate-900 text-slate-100 placeholder:text-slate-400 text-sm focus:ring-2 focus:ring-indigo-500"
                             ></textarea>
                         </div>
 
                         {/* Foto Sampul */}
                         <div className="space-y-2">
-                            <label className="block text-sm font-semibold text-slate-300">
+                            <label htmlFor="create-post-cover" className="block text-sm font-semibold text-slate-300">
                                 Cover Image
                             </label>
                             <input
+                                id="create-post-cover"
+                                name="cover_image"
                                 type="file"
                                 accept="image/*"
                                 onChange={(e) => setPostData('cover_image', e.target.files[0])}
+                                aria-label="Cover Image"
                                 className="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-700 cursor-pointer border border-slate-700 rounded-xl p-2 bg-slate-900"
                             />
                         </div>
@@ -551,16 +570,19 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                 onChange={(val) => setPostData('content', val)}
                                 height="420px"
                             />
-                            {postErrors.content && <p className="text-xs text-rose-400">{postErrors.content}</p>}
+                            {postErrors.content && <p className="text-xs text-rose-400 font-medium">{postErrors.content}</p>}
                         </div>
 
                         {/* Toggle Publish */}
                         <div className="pt-2">
-                            <label className="flex items-center gap-3 cursor-pointer">
+                            <label htmlFor="create-post-publish" className="flex items-center gap-3 cursor-pointer">
                                 <input
+                                    id="create-post-publish"
+                                    name="is_published"
                                     type="checkbox"
                                     checked={postData.is_published}
                                     onChange={(e) => setPostData('is_published', e.target.checked)}
+                                    aria-label="Publish immediately to public catalog"
                                     className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-700 bg-slate-900"
                                 />
                                 <span className="text-sm font-medium text-slate-300">
@@ -606,9 +628,9 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                         <div className="px-6 py-4 bg-purple-900 text-white flex items-center justify-between border-b border-purple-800">
                             <div className="flex items-center gap-2.5">
                                 <Sparkles className="w-5 h-5 text-purple-300" />
-                                <h3 className="font-bold text-lg">AI Post Generator</h3>
+                                <h2 className="font-bold text-lg">AI Post Generator</h2>
                             </div>
-                            <button onClick={() => setIsAiModalOpen(false)} className="text-purple-300 hover:text-white">
+                            <button onClick={() => setIsAiModalOpen(false)} aria-label="Close AI generator modal" className="text-purple-300 hover:text-white">
                                 <X className="w-5 h-5" />
                             </button>
                         </div>
@@ -617,42 +639,51 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                         <div className="p-6 overflow-y-auto space-y-5">
                             <form onSubmit={handleGenerateAi} className="space-y-4">
                                 <div>
-                                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
+                                    <label htmlFor="ai-topic" className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
                                         Topic or Keywords
                                     </label>
                                     <input
+                                        id="ai-topic"
+                                        name="topic"
                                         type="text"
                                         value={aiTopic}
                                         onChange={(e) => setAiTopic(e.target.value)}
                                         placeholder="e.g. Modern Web Development with React and Inertia"
+                                        aria-label="Topic or Keywords"
                                         required
-                                        className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-500 text-sm focus:ring-2 focus:ring-purple-500"
+                                        className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-400 text-sm focus:ring-2 focus:ring-purple-500"
                                     />
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
                                         {/* Input type="number" with bounds validation (PDF Section 3.6 Item 5) */}
-                                        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
+                                        <label htmlFor="ai-count" className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
                                             Number of Articles (1 - 5)
                                         </label>
                                         <input
+                                            id="ai-count"
+                                            name="count"
                                             type="number"
                                             min="1"
                                             max="5"
                                             value={aiCount}
                                             onChange={(e) => setAiCount(Math.min(5, Math.max(1, Number(e.target.value))))}
+                                            aria-label="Number of Articles"
                                             required
                                             className="w-full px-4 py-2 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 text-sm focus:ring-2 focus:ring-purple-500 font-semibold"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
+                                        <label htmlFor="ai-category" className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
                                             Target Category
                                         </label>
                                         <select
+                                            id="ai-category"
+                                            name="category"
                                             value={aiCategory}
                                             onChange={(e) => setAiCategory(e.target.value)}
+                                            aria-label="Target Category"
                                             className="w-full px-4 py-2 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 text-sm focus:ring-2 focus:ring-purple-500"
                                         >
                                             {categories.map((c) => (
@@ -684,9 +715,9 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                             {/* Preview AI Posts */}
                             {aiGeneratedPosts.length > 0 && (
                                 <div className="pt-4 border-t border-slate-800 space-y-4">
-                                    <h4 className="text-sm font-bold text-slate-200">
+                                    <h3 className="text-sm font-bold text-slate-200">
                                         AI Results ({aiGeneratedPosts.length} ready to save):
-                                    </h4>
+                                    </h3>
                                     <div className="space-y-3 max-h-60 overflow-y-auto pr-1">
                                         {aiGeneratedPosts.map((post, idx) => (
                                             <div key={idx} className="p-3.5 bg-slate-950 border border-slate-800 rounded-xl text-left">
@@ -718,11 +749,11 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                 <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4">
                     <div className="bg-slate-900 rounded-2xl shadow-2xl border border-slate-800 max-w-md w-full p-6 animate-in fade-in">
                         <div className="flex items-center justify-between mb-4">
-                            <h3 className="font-bold text-lg text-white flex items-center gap-2">
+                            <h2 className="font-bold text-lg text-white flex items-center gap-2">
                                 <Upload className="w-5 h-5 text-indigo-400" />
                                 <span>Import Articles from Excel</span>
-                            </h3>
-                            <button onClick={() => setIsImportModalOpen(false)} className="text-slate-400 hover:text-white">
+                            </h2>
+                            <button onClick={() => setIsImportModalOpen(false)} aria-label="Close import modal" className="text-slate-400 hover:text-white">
                                 <X className="w-5 h-5" />
                             </button>
                         </div>
@@ -732,13 +763,21 @@ export default function PostIndex({ posts, stats, filters, categories }) {
                                 Upload a spreadsheet file (<strong>.xlsx, .xls, .csv</strong>) with Title, Category, and Content columns.
                             </p>
 
-                            <input
-                                type="file"
-                                accept=".xlsx,.xls,.csv"
-                                onChange={(e) => setImportFile(e.target.files[0])}
-                                required
-                                className="block w-full text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-700 cursor-pointer border border-dashed border-slate-700 rounded-xl p-3 bg-slate-950"
-                            />
+                            <div>
+                                <label htmlFor="import-excel-file" className="block text-sm font-semibold text-slate-300 mb-2">
+                                    Excel File
+                                </label>
+                                <input
+                                    id="import-excel-file"
+                                    name="file"
+                                    type="file"
+                                    accept=".xlsx,.xls,.csv"
+                                    onChange={(e) => setImportFile(e.target.files[0])}
+                                    aria-label="Excel spreadsheet file"
+                                    required
+                                    className="block w-full text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-700 cursor-pointer border border-dashed border-slate-700 rounded-xl p-3 bg-slate-950"
+                                />
+                            </div>
 
                             <div className="flex items-center justify-end gap-2 pt-2">
                                 <button

@@ -35,15 +35,19 @@ export default function UserList({ users, filters }) {
                 {/* Search */}
                 <div className="mb-6">
                     <form onSubmit={handleSearch} className="max-w-md relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                        <label htmlFor="admin-search-users" className="sr-only">Search users</label>
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                             <Search className="w-4 h-4" />
                         </div>
                         <input
+                            id="admin-search-users"
+                            name="search"
                             type="text"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             placeholder="Search by name, username, email..."
-                            className="w-full pl-10 pr-24 py-2 rounded-xl border border-slate-800 text-sm focus:ring-2 focus:ring-amber-500 bg-slate-900 text-slate-100 placeholder:text-slate-500 shadow-sm"
+                            aria-label="Search by name, username, email"
+                            className="w-full pl-10 pr-24 py-2 rounded-xl border border-slate-800 text-sm focus:ring-2 focus:ring-amber-500 bg-slate-900 text-slate-100 placeholder:text-slate-400 shadow-sm"
                         />
                         <button
                             type="submit"
@@ -71,7 +75,7 @@ export default function UserList({ users, filters }) {
                                 {users?.data?.length > 0 ? (
                                     users.data.map((u) => (
                                         <tr key={u.id} className="hover:bg-slate-800/50 transition">
-                                            <td className="px-6 py-4 font-mono text-xs text-slate-500">
+                                            <td className="px-6 py-4 font-mono text-xs text-slate-400">
                                                 #{u.id}
                                             </td>
                                             <td className="px-6 py-4">
@@ -132,7 +136,7 @@ export default function UserList({ users, filters }) {
                     {/* Pagination */}
                     {users?.links?.length > 3 && (
                         <div className="px-6 py-4 border-t border-slate-800 flex items-center justify-between">
-                            <span className="text-xs text-slate-500">
+                            <span className="text-xs text-slate-400">
                                 Total: {users.total} Users
                             </span>
                             <div className="flex items-center gap-1">

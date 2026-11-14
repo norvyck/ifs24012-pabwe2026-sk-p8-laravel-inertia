@@ -55,76 +55,91 @@ export default function Edit({ user }) {
                     <form onSubmit={submit} className="p-8 space-y-6">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm font-medium text-slate-300 mb-1">
+                                <label className="block text-sm font-medium text-slate-300 mb-1" htmlFor="profile-name">
                                     Full Name
                                 </label>
                                 <input
+                                    id="profile-name"
+                                    name="name"
                                     type="text"
                                     value={data.name}
                                     onChange={(e) => setData('name', e.target.value)}
                                     required
-                                    className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-500 text-sm focus:ring-2 focus:ring-indigo-500"
+                                    aria-label="Full Name"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-400 text-sm focus:ring-2 focus:ring-indigo-500"
                                 />
                                 {errors.name && <p className="text-xs text-rose-400 mt-1">{errors.name}</p>}
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-slate-300 mb-1">
+                                <label className="block text-sm font-medium text-slate-300 mb-1" htmlFor="profile-email">
                                     Email Address
                                 </label>
                                 <input
+                                    id="profile-email"
+                                    name="email"
                                     type="email"
                                     value={data.email}
                                     onChange={(e) => setData('email', e.target.value)}
                                     required
-                                    className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-500 text-sm focus:ring-2 focus:ring-indigo-500"
+                                    aria-label="Email Address"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-400 text-sm focus:ring-2 focus:ring-indigo-500"
                                 />
                                 {errors.email && <p className="text-xs text-rose-400 mt-1">{errors.email}</p>}
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-1">
+                            <label className="block text-sm font-medium text-slate-300 mb-1" htmlFor="profile-photo">
                                 Profile Photo
                             </label>
                             <input
+                                id="profile-photo"
+                                name="profile_photo"
                                 type="file"
                                 accept="image/*"
                                 onChange={(e) => setData('profile_photo', e.target.files[0])}
+                                aria-label="Profile Photo"
                                 className="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-700 cursor-pointer border border-slate-700 rounded-xl p-2 bg-slate-950"
                             />
                             {errors.profile_photo && <p className="text-xs text-rose-400 mt-1">{errors.profile_photo}</p>}
                         </div>
 
                         <div className="pt-6 border-t border-slate-800">
-                            <h3 className="text-sm font-bold text-white mb-1">Change Password (Optional)</h3>
+                            <h2 className="text-base font-bold text-white mb-1">Change Password (Optional)</h2>
                             <p className="text-xs text-slate-400 mb-4">Leave blank if you do not want to change your password.</p>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="block text-xs font-semibold uppercase text-slate-400 mb-1">
+                                    <label className="block text-xs font-semibold uppercase text-slate-400 mb-1" htmlFor="profile-password">
                                         New Password
                                     </label>
                                     <input
+                                        id="profile-password"
+                                        name="password"
                                         type="password"
                                         value={data.password}
                                         onChange={(e) => setData('password', e.target.value)}
                                         placeholder="At least 6 characters"
-                                        className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-500 text-sm focus:ring-2 focus:ring-indigo-500"
+                                        aria-label="New Password"
+                                        className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-400 text-sm focus:ring-2 focus:ring-indigo-500"
                                     />
                                     {errors.password && <p className="text-xs text-rose-400 mt-1">{errors.password}</p>}
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-semibold uppercase text-slate-400 mb-1">
+                                    <label className="block text-xs font-semibold uppercase text-slate-400 mb-1" htmlFor="profile-password-confirmation">
                                         Confirm New Password
                                     </label>
                                     <input
+                                        id="profile-password-confirmation"
+                                        name="password_confirmation"
                                         type="password"
                                         value={data.password_confirmation}
                                         onChange={(e) => setData('password_confirmation', e.target.value)}
                                         placeholder="Re-type new password"
-                                        className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-500 text-sm focus:ring-2 focus:ring-indigo-500"
+                                        aria-label="Confirm New Password"
+                                        className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-400 text-sm focus:ring-2 focus:ring-indigo-500"
                                     />
                                 </div>
                             </div>

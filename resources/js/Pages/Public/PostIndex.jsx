@@ -67,15 +67,19 @@ export default function PostIndex({ posts, filters, categories }) {
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10">
                     {/* Search Form */}
                     <form onSubmit={handleSearch} className="w-full md:w-96 relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                        <label htmlFor="public-search-articles" className="sr-only">Search articles</label>
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                             <Search className="w-4 h-4" />
                         </div>
                         <input
+                            id="public-search-articles"
+                            name="search"
                             type="text"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             placeholder="Search articles by title or keyword..."
-                            className="w-full pl-10 pr-24 py-2.5 rounded-xl border border-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-slate-900 text-slate-100 placeholder:text-slate-500 shadow-sm"
+                            aria-label="Search articles by title or keyword"
+                            className="w-full pl-10 pr-24 py-2.5 rounded-xl border border-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-slate-900 text-slate-100 placeholder:text-slate-400 shadow-sm"
                         />
                         <button
                             type="submit"
@@ -178,8 +182,8 @@ export default function PostIndex({ posts, filters, categories }) {
                 ) : (
                     <div className="bg-slate-900 rounded-2xl border border-dashed border-slate-800 p-12 text-center">
                         <BookOpen className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-                        <h3 className="text-lg font-bold text-slate-200">No Articles Found</h3>
-                        <p className="text-sm text-slate-500 mt-1">Try adjusting your search keywords or filter by another category.</p>
+                        <p className="text-lg font-bold text-slate-200">No Articles Found</p>
+                        <p className="text-sm text-slate-400 mt-1">Try adjusting your search keywords or filter by another category.</p>
                     </div>
                 )}
 
