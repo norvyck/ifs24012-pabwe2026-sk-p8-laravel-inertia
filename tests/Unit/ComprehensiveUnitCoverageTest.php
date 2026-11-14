@@ -423,4 +423,106 @@ class ComprehensiveUnitCoverageTest extends TestCase
         $this->assertCount(1, $fallbackPosts);
         $this->assertStringContainsString('Missing Topic', $fallbackPosts[0]->title);
     }
+
+    public function test_post_controller_direct_404_aborts(): void
+    {
+        $controller = app(\App\Features\Post\Controllers\PostController::class);
+        $request = Request::create('/');
+
+        // 1. show (line 76)
+        try {
+            $controller->show($request, 999999);
+            $this->fail('Expected 404 in show');
+        } catch (HttpException $e) {
+            $this->assertEquals(404, $e->getStatusCode());
+        }
+
+        // 2. update (line 91)
+        try {
+            $controller->update($request, 999999);
+            $this->fail('Expected 404 in update');
+        } catch (HttpException $e) {
+            $this->assertEquals(404, $e->getStatusCode());
+        }
+
+        // 3. destroy (line 117)
+        try {
+            $controller->destroy($request, 999999);
+            $this->fail('Expected 404 in destroy');
+        } catch (HttpException $e) {
+            $this->assertEquals(404, $e->getStatusCode());
+        }
+
+        // 4. togglePublish (line 134)
+        try {
+            $controller->togglePublish($request, 999999);
+            $this->fail('Expected 404 in togglePublish');
+        } catch (HttpException $e) {
+            $this->assertEquals(404, $e->getStatusCode());
+        }
+
+        // 5. uploadCover (line 151)
+        try {
+            $controller->uploadCover($request, 999999);
+            $this->fail('Expected 404 in uploadCover');
+        } catch (HttpException $e) {
+            $this->assertEquals(404, $e->getStatusCode());
+        }
+
+        // 6. deleteCover (line 171)
+        try {
+            $controller->deleteCover($request, 999999);
+            $this->fail('Expected 404 in deleteCover');
+        } catch (HttpException $e) {
+            $this->assertEquals(404, $e->getStatusCode());
+        }
+    }
+
+    public function test_post_service_publish_draft_without_published_at_sets_now(): void
+    {
+        $user = User::factory()->create();
+        $service = app(\App\Features\Post\Services\PostService::class);
+
+        // Post with published_at = null (line 83)
+        $post = Post::factory()->create([
+            'user_id' => $user->id,
+            'is_published' => false,
+            'published_at' => null,
+        ]);
+
+        $service->updatePost($post, [
+            'is_published' => true,
+        ]);
+
+        $post->refresh();
+        $this->assertTrue($post->is_published);
+        $this->assertNotNull($post->published_at);
+    }
+
+    public function test_post_excel_service_import_empty_content_line_102(): void
+    {
+        $user = User::factory()->create();
+        $excelService = app(\App\Features\Post\Services\PostExcelService::class);
+
+        // Row where col B is title, and col D & E are empty string (line 102)
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray([
+            ['ID', 'Judul', 'Slug', 'Kategori', 'Konten'],
+            ['', 'Article Empty Content Test', '', '', ''],
+        ]);
+
+        $tempPath = storage_path('framework/testing/empty_content_102.xlsx');
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($tempPath);
+
+        $file = new \Illuminate\Http\UploadedFile($tempPath, 'empty_content_102.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', null, true);
+        $result = $excelService->importPosts($user, $file);
+
+        $this->assertEquals(1, $result['imported']);
+        $importedPost = Post::where('title', 'Article Empty Content Test')->first();
+        $this->assertNotNull($importedPost);
+        $this->assertStringContainsString('Konten otomatis dari impor artikel Article Empty Content Test.', $importedPost->content);
+        @unlink($tempPath);
+    }
 }
