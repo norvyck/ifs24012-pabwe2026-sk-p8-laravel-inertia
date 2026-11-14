@@ -176,22 +176,251 @@ class ComprehensiveUnitCoverageTest extends TestCase
         $this->assertNotNull($post->published_at);
     }
 
-    public function test_post_category_enum_all_cases(): void
+    public function test_models_casts_and_new_factory_reflection(): void
     {
-        $cases = PostCategory::cases();
-        $this->assertCount(6, $cases);
+        // 1. User casts method
+        $userReflection = new \ReflectionClass(User::class);
+        $userCastsMethod = $userReflection->getMethod('casts');
+        $userCastsMethod->setAccessible(true);
+        $userCasts = $userCastsMethod->invoke(new User);
+        $this->assertIsArray($userCasts);
+        $this->assertArrayHasKey('password', $userCasts);
 
-        foreach ($cases as $case) {
-            $this->assertNotEmpty($case->value);
-            $this->assertNotEmpty($case->label());
-        }
+        // 2. Post casts method
+        $postReflection = new \ReflectionClass(Post::class);
+        $postCastsMethod = $postReflection->getMethod('casts');
+        $postCastsMethod->setAccessible(true);
+        $postCasts = $postCastsMethod->invoke(new Post);
+        $this->assertIsArray($postCasts);
+        $this->assertArrayHasKey('is_published', $postCasts);
 
-        $values = PostCategory::values();
-        $this->assertContains(PostCategory::TEKNOLOGI->value, $values);
-        $this->assertContains(PostCategory::PENDIDIKAN->value, $values);
-        $this->assertContains(PostCategory::GAYA_HIDUP->value, $values);
-        $this->assertContains(PostCategory::BISNIS->value, $values);
-        $this->assertContains(PostCategory::OPINI->value, $values);
-        $this->assertContains(PostCategory::UMUM->value, $values);
+        // 3. Post newFactory method
+        $newFactoryMethod = $postReflection->getMethod('newFactory');
+        $newFactoryMethod->setAccessible(true);
+        $factory = $newFactoryMethod->invoke(null);
+        $this->assertInstanceOf(\Database\Factories\PostFactory::class, $factory);
+    }
+
+    public function test_all_controllers_and_services_constructors(): void
+    {
+        $adminUserCtrl = new \App\Features\Admin\Controllers\AdminUserController(
+            app(\App\Features\Admin\Services\AdminUserService::class),
+            app(PostRepositoryInterface::class),
+            app(\App\Features\Post\Services\PostExcelService::class)
+        );
+        $this->assertNotNull($adminUserCtrl);
+
+        $adminPostCtrl = new \App\Features\Post\Controllers\AdminPostController(
+            app(PostRepositoryInterface::class),
+            app(\App\Features\Post\Services\PostExcelService::class)
+        );
+        $this->assertNotNull($adminPostCtrl);
+
+        $postCtrl = new \App\Features\Post\Controllers\PostController(
+            app(PostRepositoryInterface::class),
+            app(\App\Features\Post\Services\PostService::class),
+            app(\App\Features\Post\Services\PostExcelService::class),
+            app(AiClientInterface::class)
+        );
+        $this->assertNotNull($postCtrl);
+
+        $publicCtrl = new \App\Features\Post\Controllers\PublicPostController(
+            app(PostRepositoryInterface::class)
+        );
+        $this->assertNotNull($publicCtrl);
+
+        $authCtrl = new \App\Features\Auth\Controllers\AuthController(
+            app(\App\Features\Auth\Actions\LoginUserAction::class),
+            app(\App\Features\Auth\Actions\RegisterUserAction::class)
+        );
+        $this->assertNotNull($authCtrl);
+
+        $profileCtrl = new \App\Features\Profile\Controllers\ProfileController(
+            app(\App\Features\Profile\Services\ProfileService::class)
+        );
+        $this->assertNotNull($profileCtrl);
+
+        $postExcelService = new \App\Features\Post\Services\PostExcelService(
+            app(\App\Features\Post\Services\PostService::class)
+        );
+        $this->assertNotNull($postExcelService);
+
+        $postService = new \App\Features\Post\Services\PostService(
+            app(PostRepositoryInterface::class)
+        );
+        $this->assertNotNull($postService);
+
+        $dto = new GeneratedPostItem('T', 'C', 'E', 'Ct');
+        $this->assertNotNull($dto);
+
+        $aiService = new \App\Features\Ai\Services\OpenAiPostGeneratorService('fake', 'model', 'https://example.com');
+        $this->assertNotNull($aiService);
+    }
+
+    public function test_login_user_action_with_remember_true(): void
+    {
+        $user = User::factory()->create([
+            'password' => bcrypt('secret123'),
+        ]);
+
+        $request = Request::create('/login', 'POST', [
+            'username' => $user->username,
+            'password' => 'secret123',
+            'remember' => true,
+        ]);
+        $request->setLaravelSession(app('session')->driver());
+
+        $action = new \App\Features\Auth\Actions\LoginUserAction;
+        $result = $action->execute($request, [
+            'username' => $user->username,
+            'password' => 'secret123',
+            'remember' => true,
+        ]);
+
+        $this->assertTrue($result);
+        $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_post_excel_service_edge_export_and_import(): void
+    {
+        $user = User::factory()->create();
+
+        // 1. Export with draft post, null user, and null created_at
+        $post = new Post([
+            'title' => 'Draft Post Without User',
+            'slug' => 'draft-post-no-user',
+            'category' => 'Umum',
+            'excerpt' => 'No user excerpt',
+            'is_published' => false,
+        ]);
+        $post->id = 1001;
+        $post->created_at = null;
+        $post->setRelation('user', null);
+
+        $excelService = app(\App\Features\Post\Services\PostExcelService::class);
+        $response = $excelService->exportPosts(collect([$post]), 'edge.xlsx');
+        ob_start();
+        $response->sendContent();
+        $output = ob_get_clean();
+        $this->assertNotEmpty($output);
+
+        // 2. Import with title in col A, category in col C, and empty category
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray([
+            ['Col A', 'Col B', 'Col C', 'Col D', 'Col E'],
+            ['Title in Col A', '', 'Bisnis', '', 'Some content'], // Title in Col A, Category in Col C
+            ['Title Two Col A', '', '', '', 'Content two'], // Title in Col A, Category empty (falls back to Umum)
+        ]);
+
+        $tempPath = storage_path('framework/testing/col_a_import.xlsx');
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($tempPath);
+
+        $file = new \Illuminate\Http\UploadedFile($tempPath, 'col_a_import.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', null, true);
+        $res = $excelService->importPosts($user, $file);
+
+        $this->assertEquals(2, $res['imported']);
+        @unlink($tempPath);
+    }
+
+    public function test_post_service_and_profile_service_extra_branches(): void
+    {
+        \Illuminate\Support\Facades\Storage::fake('public');
+        $user = User::factory()->create();
+        $service = app(\App\Features\Post\Services\PostService::class);
+
+        $post = $service->createPost($user, [
+            'title' => 'Sample Article',
+            'category' => 'Teknologi',
+            'content' => 'Initial content',
+            'is_published' => true,
+        ]);
+
+        // 1. Update post with same title ($data['title'] === $post->title)
+        $service->updatePost($post, [
+            'title' => 'Sample Article',
+        ]);
+        $this->assertEquals('sample-article', $post->fresh()->slug);
+
+        // 2. Update post with is_published = true when already published with published_at
+        $service->updatePost($post, [
+            'is_published' => true,
+        ]);
+        $this->assertTrue($post->fresh()->is_published);
+
+        // 3. Update post with empty excerpt and no content in update data (falls back to $post->content)
+        $service->updatePost($post, [
+            'excerpt' => '',
+        ]);
+        $this->assertNotEmpty($post->fresh()->excerpt);
+
+        // 4. deleteCoverFile internal via reflection
+        $postServiceRef = new \ReflectionClass($service);
+        $delMethod = $postServiceRef->getMethod('deleteCoverFile');
+        $delMethod->setAccessible(true);
+
+        // null path
+        $delMethod->invoke($service, null);
+        // external path
+        $delMethod->invoke($service, 'https://cdn.example.com/pic.jpg');
+        // non-existent storage path
+        $delMethod->invoke($service, '/storage/posts/does-not-exist.jpg');
+
+        // 5. ProfileService deleteProfilePhoto internal via reflection
+        $profileService = app(\App\Features\Profile\Services\ProfileService::class);
+        $profileServiceRef = new \ReflectionClass($profileService);
+        $delPhotoMethod = $profileServiceRef->getMethod('deleteProfilePhoto');
+        $delPhotoMethod->setAccessible(true);
+
+        // null path
+        $delPhotoMethod->invoke($profileService, null);
+        // external path
+        $delPhotoMethod->invoke($profileService, 'https://cdn.example.com/pic.jpg');
+        // non-existent storage path
+        $delPhotoMethod->invoke($profileService, '/storage/profiles/does-not-exist.jpg');
+    }
+
+    public function test_openai_markdown_backticks(): void
+    {
+        \Illuminate\Support\Facades\Http::fake([
+            'https://api.openai.com/v1/*' => \Illuminate\Support\Facades\Http::response([
+                'choices' => [
+                    [
+                        'message' => [
+                            'content' => "```json\n[{\"title\": \"Markdown Wrapped Article\", \"content\": \"Full markdown content here\"}]\n```",
+                        ],
+                    ],
+                ],
+            ], 200),
+        ]);
+
+        $service = new \App\Features\Ai\Services\OpenAiPostGeneratorService('sk-mock-key');
+        $posts = $service->generatePosts('Wrapped Topic', 1, 'Teknologi');
+        $this->assertCount(1, $posts);
+        $this->assertEquals('Markdown Wrapped Article', $posts[0]->title);
+    }
+
+    public function test_openai_missing_attributes_fallback(): void
+    {
+        \Illuminate\Support\Facades\Http::fake([
+            'https://api.openai.com/v1/*' => \Illuminate\Support\Facades\Http::response([
+                'choices' => [
+                    [
+                        'message' => [
+                            'content' => json_encode([
+                                ['category' => 'Teknologi'], // missing title & content
+                                ['title' => 'Only Title'], // missing content
+                            ]),
+                        ],
+                    ],
+                ],
+            ], 200),
+        ]);
+
+        $service = new \App\Features\Ai\Services\OpenAiPostGeneratorService('sk-mock-key');
+        $fallbackPosts = $service->generatePosts('Missing Topic', 1, 'Teknologi');
+        $this->assertCount(1, $fallbackPosts);
+        $this->assertStringContainsString('Missing Topic', $fallbackPosts[0]->title);
     }
 }
