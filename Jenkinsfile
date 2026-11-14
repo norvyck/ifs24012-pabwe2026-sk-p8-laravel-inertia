@@ -182,7 +182,6 @@ pipeline {
 
                     echo "=== Tests Passed ==="
                     ls -lh coverage.xml coverage.txt || true
-                    cat coverage.txt || true
 
                     echo "=== Enforcing 100% Coverage (app/) ==="
                     php -r '
@@ -245,22 +244,6 @@ pipeline {
                         }
 
                         if ($failed) {
-                            echo "=== UNCOVERED DETAILS ===" . PHP_EOL;
-                            foreach ($xml->xpath("//file") as $file) {
-                                $fileMetrics = $file->metrics;
-                                $stmts = (int) $fileMetrics["statements"];
-                                $covStmts = (int) $fileMetrics["coveredstatements"];
-                                $mthds = (int) $fileMetrics["methods"];
-                                $covMthds = (int) $fileMetrics["coveredmethods"];
-                                if ($covStmts < $stmts || $covMthds < $mthds) {
-                                    echo "File: " . (string) $file["name"] . " [Statements: {$covStmts}/{$stmts}, Methods: {$covMthds}/{$mthds}]" . PHP_EOL;
-                                    foreach ($file->line as $l) {
-                                        if ((int) $l["count"] === 0) {
-                                            echo "  Uncovered line " . (string) $l["num"] . " (type: " . (string) $l["type"] . ")" . PHP_EOL;
-                                        }
-                                    }
-                                }
-                            }
                             exit(1);
                         }
 
