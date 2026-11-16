@@ -34,46 +34,58 @@ class OpenAiPostGeneratorService implements AiClientInterface
             : PostCategory::TEKNOLOGI->value;
 
         if (! empty($this->apiKey)) {
-            try {
-                $prompt = "Hasilkan {$count} artikel blog tentang '{$topic}' dengan kategori '{$validCategory}'.\n"
-                    ."Keluarkan HANYA format JSON array valid tanpa markdown formatting dengan struktur objek:\n"
-                    .'[{"title": "Judul Artikel", "category": "'.$validCategory.'", "excerpt": "Ringkasan 1-2 kalimat.", "content": "Konten lengkap artikel dalam format Markdown..."}]';
+            $modelsToTry = [$this->model];
+            if (str_starts_with($this->model, 'gemini-3.8')) {
+                $modelsToTry[] = 'gemini-3.5-flash';
+                $modelsToTry[] = 'gemini-3.1-flash-lite';
+            }
 
-                $response = Http::withToken($this->apiKey)
-                    ->timeout(30)
-                    ->post(rtrim($this->baseUri, '/').'/chat/completions', [
-                        'model' => $this->model,
-                        'messages' => [
-                            ['role' => 'system', 'content' => 'Kamu adalah asisten jurnalis dan penulis blog profesional.'],
-                            ['role' => 'user', 'content' => $prompt],
-                        ],
-                        'temperature' => 0.7,
-                    ]);
+            foreach ($modelsToTry as $targetModel) {
+                try {
+                    $prompt = "Hasilkan {$count} artikel blog tentang '{$topic}' dengan kategori '{$validCategory}'.\n"
+                        ."Keluarkan HANYA format JSON array valid tanpa markdown formatting dengan struktur objek:\n"
+                        .'[{"title": "Judul Artikel", "category": "'.$validCategory.'", "excerpt": "Ringkasan 1-2 kalimat.", "content": "Konten lengkap artikel dalam format Markdown..."}]';
 
-                if ($response->successful()) {
-                    $jsonContent = $response->json('choices.0.message.content');
-                    $cleaned = preg_replace('/^```json\s*|\s*```$/i', '', trim((string) $jsonContent));
-                    $data = json_decode((string) $cleaned, true);
+                    $response = Http::withToken($this->apiKey)
+                        ->timeout(30)
+                        ->post(rtrim($this->baseUri, '/').'/chat/completions', [
+                            'model' => $targetModel,
+                            'messages' => [
+                                ['role' => 'system', 'content' => 'Kamu adalah asisten jurnalis dan penulis blog profesional.'],
+                                ['role' => 'user', 'content' => $prompt],
+                            ],
+                            'temperature' => 0.7,
+                        ]);
 
-                    if (is_array($data) && count($data) > 0) {
-                        $items = [];
-                        foreach ($data as $item) {
-                            if (isset($item['title'], $item['content'])) {
-                                $items[] = new GeneratedPostItem(
-                                    title: (string) $item['title'],
-                                    category: (string) ($item['category'] ?? $validCategory),
-                                    excerpt: (string) ($item['excerpt'] ?? substr((string) $item['content'], 0, 150)),
-                                    content: (string) $item['content'],
-                                );
+                    if ($response->successful()) {
+                        $jsonContent = $response->json('choices.0.message.content');
+                        if (preg_match('/\[.*\]/s', (string) $jsonContent, $matches)) {
+                            $data = json_decode($matches[0], true);
+                        } else {
+                            $cleaned = preg_replace('/^```json\s*|\s*```$/i', '', trim((string) $jsonContent));
+                            $data = json_decode((string) $cleaned, true);
+                        }
+
+                        if (is_array($data) && count($data) > 0) {
+                            $items = [];
+                            foreach ($data as $item) {
+                                if (isset($item['title'], $item['content'])) {
+                                    $items[] = new GeneratedPostItem(
+                                        title: (string) $item['title'],
+                                        category: (string) ($item['category'] ?? $validCategory),
+                                        excerpt: (string) ($item['excerpt'] ?? substr((string) $item['content'], 0, 150)),
+                                        content: (string) $item['content'],
+                                    );
+                                }
+                            }
+                            if (count($items) > 0) {
+                                return $items;
                             }
                         }
-                        if (count($items) > 0) {
-                            return $items;
-                        }
                     }
+                } catch (Throwable $e) {
+                    Log::warning("AI generation with model {$targetModel} failed: ".$e->getMessage());
                 }
-            } catch (Throwable $e) {
-                Log::warning('OpenAI post generation failed, falling back to local generator: '.$e->getMessage());
             }
         }
 

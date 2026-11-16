@@ -32,5 +32,7 @@
         <env name="PULSE_ENABLED" value="false"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="NIGHTWATCH_ENABLED" value="false"/>
+        <env name="OPENAI_BASE_URI" value="https://api.openai.com/v1"/>
+        <env name="OPENAI_MODEL" value="gpt-4o-mini"/>
     </php>
 </phpunit>
